@@ -4,51 +4,36 @@ import './App.css'
 import { TbBrandBooking } from 'react-icons/tb'
 import { CgMusicSpeaker } from 'react-icons/cg'
 import { FaRegUser } from 'react-icons/fa'
+import AdminDashboard from './pages/admin/adminDashboard'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import HomePage from './pages/home/homePage'
 
 function App() {
 
   return (
+<BrowserRouter>
 
+<Routes path="/*" > 
 
-    <>
-
-   <div className='w-full h-screen flex'> 
-
-    <div className='w-[300px] h-full bg-green-200'>
-
-        <button className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center"> 
-          <MdOutlineDashboard className="w-[25px] h-[25px]"/>
-          Dashboard</button>
-
-        <button className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
-          <TbBrandBooking className="w-[25px] h-[25px]"/>
-          Bookings</button>
+<Route path="/admin/*" element={<AdminDashboard />} />
+<Route path="/*" element={<HomePage/> } />
+<Route path="/*" element={<h1> 404 Not Found </h1> } />
 
 
 
-          <button className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
-            <CgMusicSpeaker className="w-[25px] h-[25px]"/> Items
-          </button>
 
-          <button className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
-            <FaRegUser className="w-[25px] h-[25px]"/> Users
-          </button>
+</Routes>
 
 
 
-        
 
 
 
-    </div >
 
-    <div className="w-full bg-slate-300"></div>
-    
 
-    
-   </div>
-      
-    </>
+</BrowserRouter>
+
+   
   )
 }
 
