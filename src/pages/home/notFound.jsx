@@ -6,7 +6,7 @@ const NotFound = () => {
   
   
   
-<div className='flex flex-col items-center justify-center items-center h-[calc(100vh-100px)] w-full bg-blue-100'>
+<div className='flex flex-col items-center justify-center  h-[calc(100vh-100px)] w-full bg-blue-100'>
   
       <div>Page Not Found</div>
 
