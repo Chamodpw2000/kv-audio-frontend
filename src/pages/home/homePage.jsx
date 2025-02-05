@@ -5,6 +5,7 @@ import Contact from './contact'
 import Items from './items'
 import Gallery from './gallery'
 import NotFound from './notFound'
+import LoginPage from '../../login/login'
 
 const HomePage = () => {
     return (
@@ -20,6 +21,7 @@ const HomePage = () => {
                     <Route path="contact" element={<Contact />} />
                     <Route path="items" element={<Items />} />
                     <Route path="gallery" element={<Gallery />} />
+                    <Route path="login" element={<LoginPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>

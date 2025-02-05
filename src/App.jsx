@@ -4,6 +4,8 @@ import HomePage from './pages/home/homePage'
 import AdminDashboard from './pages/admin/adminDashboard'
 import Testing from './components/testing'
 import LoginPage from './login/login'
+import ItemsCard from './components/itemsCard'
+import AddItem from './components/addItem'
 
 function App() {
     return (
@@ -15,7 +17,7 @@ function App() {
                 <Route path="/home/*" element={<HomePage />} />
                 <Route path="/test" element={<Testing />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/" element={<LoginPage />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<h1>404 Not Found</h1>} />
             </Routes>
         </BrowserRouter>

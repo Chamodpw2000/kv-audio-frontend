@@ -25,6 +25,8 @@ const LoginPage = () => {
         ).then((res) =>{ console.log(res),
             toast.success("Login Success")
             const user = res.data.user
+            localStorage.setItem("token", res.data.token)
+            localStorage.setItem("user", JSON.stringify(user))
             if(user.role === "admin"){
                navigate('/admin')
             }
