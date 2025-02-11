@@ -1,172 +1,147 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ItemsPageAdmin = () => {
+  const [items, setItems] = useState([]);
+  const [itemsLoaded, setitemsLoaded] = useState(false);
 
-    const sampleData = [
-        {
-          "key": "P001",
-          "name": "Wireless Headphones",
-          "price": 12000,
-          "category": "audio",
-          "dimentions": "20cm x 15cm x 10cm",
-          "description": "High-quality wireless headphones with noise cancellation.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P002",
-          "name": "Smart LED Bulb",
-          "price": 2500,
-          "category": "lights",
-          "dimentions": "10cm x 6cm",
-          "description": "Energy-efficient smart LED bulb with remote control.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P003",
-          "name": "Bluetooth Speaker",
-          "price": 7500,
-          "category": "audio",
-          "dimentions": "15cm x 10cm x 8cm",
-          "description": "Portable Bluetooth speaker with powerful bass.",
-          "availability": false,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P004",
-          "name": "Desk Lamp",
-          "price": 3200,
-          "category": "lights",
-          "dimentions": "30cm x 15cm x 15cm",
-          "description": "Adjustable LED desk lamp with touch control.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P005",
-          "name": "Gaming Headset",
-          "price": 14500,
-          "category": "audio",
-          "dimentions": "22cm x 18cm x 12cm",
-          "description": "Surround sound gaming headset with microphone.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P006",
-          "name": "Smart Ceiling Light",
-          "price": 18000,
-          "category": "lights",
-          "dimentions": "40cm x 40cm x 8cm",
-          "description": "Ceiling light with multiple color options and remote control.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P007",
-          "name": "Noise Cancelling Earbuds",
-          "price": 9600,
-          "category": "audio",
-          "dimentions": "5cm x 3cm x 2cm",
-          "description": "Compact wireless earbuds with active noise cancellation.",
-          "availability": false,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P008",
-          "name": "Studio Microphone",
-          "price": 19500,
-          "category": "audio",
-          "dimentions": "25cm x 10cm x 8cm",
-          "description": "Professional studio microphone with high-fidelity audio recording.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P009",
-          "name": "Rechargeable Lantern",
-          "price": 4800,
-          "category": "lights",
-          "dimentions": "18cm x 12cm x 12cm",
-          "description": "Portable rechargeable LED lantern for outdoor use.",
-          "availability": true,
-          "image": ["https://picsum.photos/400"]
-        },
-        {
-          "key": "P010",
-          "name": "Home Theater System",
-          "price": 55000,
-          "category": "audio",
-          "dimentions": "45cm x 35cm x 25cm",
-          "description": "5.1 channel home theater system with powerful bass.",
-          "availability": false,
-          "image": ["https://picsum.photos/400"]
-        }
-      ]
+const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
 
 
-      const [items, setItems] = useState(sampleData)
+  useEffect(() => {
+
+    if (!itemsLoaded) {
+      axios
+        .get("http://localhost:3000/api/products/getProducts", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      .then((res) => {
+        console.log(res.data);
+
+        setItems(res.data);
+       setitemsLoaded(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
+  }, [itemsLoaded]);
+
+  // Handle Delete Item
+  const handleDelete = async (id) => {
+    try {
+
+
+
+      setitemsLoaded(false);
+
       
 
+      const res = await axios.delete(`http://localhost:3000/api/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setitemsLoaded(!itemsLoaded);
+      console.log(res.data);
+
+    } catch (error) {
+      console.log("Error deleting item:", error);
+    }
+  };
 
   return (
-    <div className='w-full h-full bg-red-100 relative'>
-
-        <Link to='/admin/additem'> 
-
-        <CiCirclePlus className='text-[50px] absolute right-2 bottom-2 hover:text-red-900 hover:text-[70px] cursor-pointer'/>
-
-        
-        
-        </Link>
-
-        <table>
-            <thead>
-                
-                <th>Key</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Dimentions</th>
-                <th>Description</th>
-                <th>Availability</th>
-                <th>Actions</th>
 
 
-              
-            </thead>
+    
+    <div className="w-full min-h-screen relative bg-gray-100 p-6 flex justify-center items-center flex-col">
 
-            <tbody>
-                {sampleData.map((item) => (
-                    <tr key={item.key}>
-                        <td>{item.key}</td>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.category}</td>
-                        <td>{item.dimentions}</td>
-                        <td>{item.description}</td>
-                        <td>{item.availability ? 'Available' : 'Not Available'}</td>
-                    </tr>
-                ))}
-            </tbody>
+{!itemsLoaded &&  <div className="border-4 my-4 border-b-green-500 h-[100px] w-[100px] rounded-full flex justify-center items-center animate-spin relative">
+  
+  </div>}
+
+     
+
+
+      {/* Add Item Button */}
+      { itemsLoaded && <div><Link to="/admin/additem">
+        <CiCirclePlus className="text-red-600 text-[50px] absolute right-4 bottom-4 hover:text-red-800 hover:text-[65px] transition-all cursor-pointer" />
+      </Link>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-red-500 text-white">
+            <tr>
+              <th className="py-3 px-5 text-left">Key</th>
+              <th className="py-3 px-5 text-left">Name</th>
+              <th className="py-3 px-5 text-left">Price</th>
+              <th className="py-3 px-5 text-left">Category</th>
+              <th className="py-3 px-5 text-left">Dimensions</th>
+              <th className="py-3 px-5 text-left">Description</th>
+              <th className="py-3 px-5 text-center">Availability</th>
+              <th className="py-3 px-5 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.length > 0 ? (
+              items.map((item) => (
+                <tr
+                  key={item._id}
+                  className="border-b hover:bg-gray-50 transition"
+                >
+                  <td className="py-3 px-5">{item.key}</td>
+                  <td className="py-3 px-5">{item.name}</td>
+                  <td className="py-3 px-5">${item.price}</td>
+                  <td className="py-3 px-5">{item.category}</td>
+                  <td className="py-3 px-5">{item.dimentions}</td>
+                  <td className="py-3 px-5">{item.description}</td>
+                  <td className="py-3 px-5 text-center">
+                    <span
+                      className={`inline-block min-w-[120px] px-3 py-1 rounded-full text-white text-center ${item.availability ? "bg-green-500" : "bg-red-500"
+                        }`}
+                    >
+                      {item.availability ? "Available" : "Not Available"}
+                    </span>
+                  </td>
+                  <td className="py-3 px-5 flex justify-center gap-3">
+                    {/* Edit Button */}
+                    <button
+                      onClick={() => {navigate("/admin/items/edit" , {state:item})}}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
+                    >
+                      Edit
+                    </button>
+
+                    {/* Delete Button */}
+                    <button
+                      onClick={() => handleDelete(item.key)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="8"
+                  className="text-center py-5 text-gray-500 font-semibold"
+                >
+                  No items available
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
-
-
-        
-
-
-
-
-
-
-
-
-
+      </div>
+      
+      </div>}
     </div>
-  )
-}
+  );
+};
 
-export default ItemsPageAdmin
+export default ItemsPageAdmin;

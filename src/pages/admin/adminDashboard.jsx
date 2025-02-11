@@ -7,6 +7,7 @@ import { Route, Routes ,Link } from 'react-router-dom'
 import Itemsadmin from './itemsAdmin'
 import AddItem from '../../components/addItem'
 import ItemsPageAdmin from './itemsPage'
+import UpdateItem from '../home/updateItemPage'
 const AdminDashboard = () => {
     return (
         <div>
@@ -32,6 +33,7 @@ const AdminDashboard = () => {
                     <Link to="/admin/users" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
                         <FaRegUser className="w-[25px] h-[25px]" /> Users
                     </Link>
+
                     <Link to="/" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
                         <FaBackward className="w-[25px] h-[25px]" />Back
                     </Link>
@@ -56,6 +58,7 @@ const AdminDashboard = () => {
                         <Route path="/items" element={<ItemsPageAdmin />} />    
                         <Route path="/users" element={<h1> Users </h1>} />
                         <Route path="/additem" element={<AddItem/>} />
+                        <Route path="/items/edit" element={<UpdateItem/>} />
 
 
 
