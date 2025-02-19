@@ -15,7 +15,7 @@ const HomePage = () => {
         
           
 
-            <div className="h-[calc(100vh-100px)] w-full bg-blue-100">
+            <div className="h-[calc(100vh-100px)] w-full bg-primary">
                 <Routes>
                     <Route path="/" element={<h1>Welcome to Home Page</h1>} />
                     <Route path="contact" element={<Contact />} />
