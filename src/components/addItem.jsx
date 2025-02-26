@@ -214,6 +214,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import mediaUpload from '../utils/mediaUpload';
 
 const AddItem = () => {
   const navigate = useNavigate();
@@ -225,8 +226,24 @@ const AddItem = () => {
   const [productDimensions, setProductDimensions] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [loading, setLoading] = useState(false); // Track API call state
+  const [productImages, setProductImages] = useState([]);
 
   const handleAddItem = async () => {
+
+    console.log(productImages);
+
+    const promises = [];
+    for(let i = 0 ; i<productImages.length; i++){
+      console.log(productImages[i]);
+      const promise = mediaUpload(productImages[i]);
+      promises.push(promise);
+    }
+
+
+
+  
+
+    
     // Basic validation
     if (!productKey || !productName || !productPrice || !productCategory || !productDescription) {
       toast.error('Please fill in all required fields.');
@@ -240,7 +257,25 @@ const AddItem = () => {
     }
 
     try {
+
+      // Promise.all(promises).then((result)=>{
+      //   console.log(result);
+        
+      // })
+      // .catch((err)=>{
+      //   toast.error( err);
+      //   console.log(err);
+        
+      // }
+      // )
+
+
+
+
       setLoading(true); // Disable button during API call
+
+
+      const imageurls =  await  Promise.all(promises);
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/addProduct`,
@@ -249,8 +284,9 @@ const AddItem = () => {
           name: productName,
           price: productPrice,
           category: productCategory,
-          dimensions: productDimensions,
+          dimentions: productDimensions,
           description: productDescription,
+          image: imageurls,
         },
         {
           headers: {
@@ -268,6 +304,7 @@ const AddItem = () => {
       setProductDimensions('');
       setProductDescription('');
 
+
       navigate('/admin/items');
     } catch (error) {
       console.error(error);
@@ -275,7 +312,7 @@ const AddItem = () => {
     } finally {
       setLoading(false); // Re-enable button
     }
-  };
+   };
 
   return (
     <div className='w-full h-full flex flex-col items-center justify-center'>
@@ -341,6 +378,13 @@ const AddItem = () => {
           placeholder='Enter Product Description'
           onChange={(e) => setProductDescription(e.target.value)}
           value={productDescription}
+        />
+
+
+        <input
+          type="file"
+          multiple
+          onChange={(e) => setProductImages(e.target.files)}
         />
 
         {/* Buttons */}
