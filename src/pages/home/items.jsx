@@ -9,7 +9,7 @@ const [state, setState] = useState("loading") // loading, success, error
   const [products,setProducts] = useState([])
 
   useEffect(()=>{
-    if(state==="loading"){axios.get("http://localhost:3000/api/products/getProducts").then((res)=>{
+    if(state==="loading"){axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/getProducts`).then((res)=>{
       console.log(res.data)
       setProducts(res.data)
       setState("success")

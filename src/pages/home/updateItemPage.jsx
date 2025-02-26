@@ -40,7 +40,7 @@
 
 //     try {
 //       const res = await axios.post(
-//         "http://localhost:3000/api/products/addProduct",
+//         `${import.meta.env.VITE_BACKEND_URL}/api/products/addProduct`,
 //         formData,
 //         {
 //           headers: {
@@ -253,7 +253,7 @@ const UpdateItem = () => {
       setLoading(true); // Disable button during API call
 
       const result = await axios.put(
-        'http://localhost:3000/api/products/' + productKey,
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/` + productKey,
         {
           name: productName,
           price: productPrice,

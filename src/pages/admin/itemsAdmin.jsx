@@ -10,7 +10,7 @@ const Itemsadmin = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/products/getProducts')
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/getProducts`)
                 console.log('Full API Response:', response.data) // Debug log
                 setItems(response.data)
             } catch (error) {

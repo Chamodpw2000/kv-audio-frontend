@@ -26,7 +26,7 @@ const RegisterPage = () => {
             phone
         });
 
-        axios.post('http://localhost:3000/api/users/register', 
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/register`, 
             {
                 firstName,
                 lastName,

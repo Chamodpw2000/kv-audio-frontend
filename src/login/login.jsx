@@ -17,7 +17,9 @@ const LoginPage = () => {
             password
         );
 
-        axios.post("http://localhost:3000/api/users/login", {
+        const backendurl = import.meta.env.VITE_BACKEND_URL
+
+        axios.post(`${backendurl}/api/users/login`, {
             email: email,
             password: password
 
