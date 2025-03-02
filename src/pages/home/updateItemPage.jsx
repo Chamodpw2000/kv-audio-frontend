@@ -214,6 +214,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
+import mediaUpload from '../../utils/mediaUpload';
 
 const UpdateItem = () => {
   const navigate = useNavigate();
@@ -235,8 +236,27 @@ const UpdateItem = () => {
     dimentions);
   const [productDescription, setProductDescription] = useState(location.state.description);
   const [loading, setLoading] = useState(false); // Track API call state
+  const [productImages, setProductImages] = useState([]); // Track uploaded images
 
   const handleUpdateItem = async () => {
+
+    let updatingImages = location.state.image;
+
+
+    if(productImages.length > 0){
+
+      const promises = [];
+      for (let i = 0; i< productImages.length; i++){
+        console.log(productImages[i]);
+        const promise = mediaUpload(productImages[i]);
+        promises.push(promise);
+        
+      }
+
+      const imageUrls = await Promise.all(promises);
+      updatingImages = imageUrls;
+
+    }
     // Basic validation
     if (!productKey || !productName || !productPrice || !productCategory || !productDescription) {
       toast.error('Please fill in all required fields.');
@@ -260,6 +280,7 @@ const UpdateItem = () => {
           category: productCategory,
           dimensions: productDimensions,
           description: productDescription,
+          image: updatingImages,
         },
         {
           headers: {
@@ -352,6 +373,13 @@ const UpdateItem = () => {
           onChange={(e) => setProductDescription(e.target.value)}
           value={productDescription}
         />
+
+<input
+          type="file"
+          multiple
+          onChange={(e) => setProductImages(e.target.files)}
+        />
+
 
         {/* Buttons */}
         <div className="flex w-full justify-between">
