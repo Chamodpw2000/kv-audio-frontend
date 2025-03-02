@@ -1,6 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ item }) => {
+
+    console.log("keyy",item.key);
+    
     return (
         <div className="max-w-sm shadow-lg rounded-lg overflow-hidden border bg-white border-gray-200 m-5">
             {/* Product Image */}
@@ -29,12 +33,12 @@ const ProductCard = ({ item }) => {
                 </div>
 
                 {/* Add to Cart Button */}
-                <button
-                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                <Link to={`/home/product/${item.key}`}
+                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-center"
                 >
-                    Add to Cart
+                 View Details
                     
-                </button>
+                </Link>
             </div>
         </div>
     );

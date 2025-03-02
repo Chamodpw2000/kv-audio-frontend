@@ -7,6 +7,7 @@ import LoginPage from './login/login'
 import ItemsCard from './components/itemsCard'
 import AddItem from './components/addItem'
 import RegisterPage from './assets/register/RegisterPage'
+import NotFound from './pages/home/notFound'
 
 function App() {
     return (
@@ -21,7 +22,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
 
                 <Route path="/" element={<HomePage />} />
-                <Route path="*" element={<h1>404 Not Found</h1>} />
+                <Route path="*" element={<NotFound/>} />
             </Routes>
         </BrowserRouter>
 
