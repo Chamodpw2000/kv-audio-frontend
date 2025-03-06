@@ -7,6 +7,7 @@ import Gallery from './gallery'
 import NotFound from './notFound'
 import LoginPage from '../../login/login'
 import ProductOverview from './productOverview'
+import BookingsPage from './bookingPage'
 
 const HomePage = () => {
     return (
@@ -25,6 +26,8 @@ const HomePage = () => {
                     <Route path="login" element={<LoginPage />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="product/:id" element={<ProductOverview/>} />
+                    <Route path="booking" element={<BookingsPage />} />
+
 
                 </Routes>
             </div>

@@ -8,6 +8,7 @@ import ItemsCard from './components/itemsCard'
 import AddItem from './components/addItem'
 import RegisterPage from './assets/register/RegisterPage'
 import NotFound from './pages/home/notFound'
+import BookingsPage from './pages/home/bookingPage'
 
 function App() {
     return (
