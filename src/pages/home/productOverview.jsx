@@ -4,6 +4,9 @@ import { use } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageSlider from '../../components/imageSlider';
 import { addToCart, loadCart } from '../../utils/Cart.jsx';
+import { toast } from 'react-hot-toast';
+
+
 
 
 const ProductOverview = () => {
@@ -62,8 +65,10 @@ const ProductOverview = () => {
                         </div>
 
                         <button className='bg-accent text-white px-4 py-2 rounded-md mt-4' onClick={() => {
+                            
                             addToCart(product.key, 1);
-                            console.log(loadCart()
+                            console.log(loadCart(),
+                                toast.success("Item added to cart")
                             )
                         }}>Add to Cart</button>
 

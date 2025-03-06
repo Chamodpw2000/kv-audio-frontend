@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { removeFromCart, addToCart } from '../utils/Cart.jsx';
+import { FaTrash } from 'react-icons/fa';
 
 const BookingItem = ({ itemKey, qty, refresh }) => {
     const [item, setItem] = useState(null);
@@ -71,20 +72,29 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
     return (
         <div className='w-full max-w-3xl flex flex-col border border-gray-200 p-6 m-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300'>
 
-            <div onClick={() => {
-                setCart(JSON.parse(localStorage.getItem('cart')) || []);
 
-
-                console.log("cart is", cart);
-            }}>
-
-                Show Cart
-            </div>
 
             <div className='flex justify-between items-start'>
                 <div className='flex-1'>
-                    <h2 className='text-2xl font-bold text-accent mb-2'>{item.name}</h2>
+
+                    <div className='flex justify-between items-center'>
+
+
+                        <div>
+                            <h2 className='text-2xl font-bold text-accent mb-2'>{item.name}</h2>
+                        </div>
+
+
+                        <div>
+                            <FaTrash
+                                className="w-7 h-7 p-1 text-red-800  hover:text-white hover:bg-red-800 rounded-full"
+                            />                        </div>
+
+                    </div>
+
                     <p className='text-gray-600 mb-3'>{item.description}</p>
+
+
 
                     <div className='grid grid-cols-2 gap-4 mb-4'>
                         <div>
@@ -121,8 +131,8 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
                                 <span className='font-semibold'>Dimensions:</span> {item.dimentions}
                             </p>
                             <p className={`mt-2 inline-block px-3 py-1 rounded-full text-sm font-medium ${item.availability
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-red-100 text-red-800'
                                 }`}>
                                 {item.availability ? 'In Stock' : 'Out of Stock'}
                             </p>
