@@ -8,6 +8,7 @@ import NotFound from './notFound'
 import LoginPage from '../../login/login'
 import ProductOverview from './productOverview'
 import BookingsPage from './bookingPage'
+import Orders from '../admin/bookings'
 
 const HomePage = () => {
     return (
@@ -27,6 +28,11 @@ const HomePage = () => {
                     <Route path="*" element={<NotFound />} />
                     <Route path="product/:id" element={<ProductOverview/>} />
                     <Route path="booking" element={<BookingsPage />} />
+                    <Route path="mybookings" element={<Orders />} />
+
+
+
+                    
 
 
                 </Routes>
