@@ -1,14 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineDashboard } from 'react-icons/md'
 import { TbBrandBooking } from 'react-icons/tb'
 import { CgMusicSpeaker } from 'react-icons/cg'
 import { FaBackward, FaRegUser } from 'react-icons/fa'
-import { Route, Routes ,Link } from 'react-router-dom'
+import { Route, Routes, Link } from 'react-router-dom'
 import Itemsadmin from './itemsAdmin'
 import AddItem from '../../components/addItem'
 import ItemsPageAdmin from './itemsPage'
 import UpdateItem from '../home/updateItemPage'
+import Users from './users'
+import Bookings from './bookings'
+import Orders from './bookings'
+import axios from 'axios'
 const AdminDashboard = () => {
+
+    
+
+    const [userValidated, setUserValidated] = useState(false);
+
+    useEffect(() => {
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login';
+        }
+
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
+
+
+            console.log(res.data);
+
+            const user = res.data;
+            if (user.role !== 'admin') {
+                window.location.href = '/login';
+            }
+            setUserValidated(true);
+            
+         }).catch((err) => {
+            console.error(err);
+            window.location.href = '/login';
+        });
+
+    }, [])
     return (
         <div>
 
@@ -50,21 +87,23 @@ const AdminDashboard = () => {
 
 
 
-
+{userValidated && 
                     <Routes path="/*" >
                         <Route path="/" element={<h1> Dashboard </h1>} />
 
-                        <Route path="/bookings" element={<h1> Bookings </h1>} />
-                        <Route path="/items" element={<ItemsPageAdmin />} />    
-                        <Route path="/users" element={<h1> Users </h1>} />
-                        <Route path="/additem" element={<AddItem/>} />
-                        <Route path="/items/edit" element={<UpdateItem/>} />
+                        <Route path="/bookings" element={<Orders />} />
+                        <Route path="/items" element={<ItemsPageAdmin />} />
+                        <Route path="/users" element={<Users />} />
+                        <Route path="/additem" element={<AddItem />} />
+                        <Route path="/items/edit" element={<UpdateItem />} />
 
 
 
 
 
                     </Routes>
+
+}
                 </div>
 
 
