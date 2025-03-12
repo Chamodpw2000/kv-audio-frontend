@@ -33,7 +33,7 @@ const ProductOverview = () => {
     }, [])
 
     return (
-        <div className='w-full bg-red-300 h-full flex items-center justify-center'
+        <div className='w-full flex  justify-center '
         >
 
 
@@ -48,24 +48,27 @@ const ProductOverview = () => {
 
 
             {
-                loadingStatus == "loaded" && <div className='w-full h-full flex justify-center items-center bg-slate-100'>
-
-                    <div className='w-[49%]   h-full'>
+                loadingStatus == "loaded" && <div className='p-2 w-full  flex flex-col justify-center items-center bg-slate-100'>
+                    <h1 className='text-3xl font-bold text-accent text-center my-3'>{product.name}</h1>
+                    <div className='w-full   h-full  '>
 
                         <ImageSlider images={product.image} />
 
                     </div>
-                    <div className='w-[49%] bg-blue-100 h-full flex flex-col items-center '>
+                    <div className='w-full bg-blue-100  flex flex-col items-center  '>
 
-                        <h1 className='text-3xl font-bold text-accent'>{product.name}</h1>
-                        <p className='text-lg text-slate-800'>{product.description}</p>
-                        <p className='text-xl text-accent font-bold'>${product.price}</p>
+                        <h1 className='text-3xl font-bold text-accent hidden'>{product.name}</h1>
+                        <p className='text-lg text-slate-800 text-center'>Category: {product.category}</p>
+
+
+                        <p className='text-lg text-slate-800 text-center'>{product.description}</p>
+                        <p className='text-xl text-accent font-bold'>LKR {product.price.toFixed(2)}</p>
                         <div className="mt-4 text-sm text-gray-600">
                             <span className='font-medium'>Dimensions: </span>{product.dimentions}
                         </div>
 
                         <button className='bg-accent text-white px-4 py-2 rounded-md mt-4' onClick={() => {
-                            
+
                             addToCart(product.key, 1);
                             console.log(loadCart(),
                                 toast.success("Item added to cart")
