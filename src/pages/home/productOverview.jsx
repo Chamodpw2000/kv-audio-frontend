@@ -48,16 +48,16 @@ const ProductOverview = () => {
 
 
             {
-                loadingStatus == "loaded" && <div className='p-2 w-full  flex flex-col justify-center items-center bg-slate-100'>
-                    <h1 className='text-3xl font-bold text-accent text-center my-3'>{product.name}</h1>
-                    <div className='w-full   h-full  '>
+                loadingStatus == "loaded" && <div className='p-2 w-full  flex flex-col md:flex-row justify-center items-center bg-slate-100'>
+                    <h1 className='text-3xl font-bold text-accent text-center my-3 md:hidden'>{product.name}</h1>
+                    <div className='w-full   h-full  md:w-[49%]'>
 
                         <ImageSlider images={product.image} />
 
                     </div>
-                    <div className='w-full bg-blue-100  flex flex-col items-center  '>
+                    <div className='w-full bg-blue-100  flex flex-col items-center md:w-[49%]  '>
 
-                        <h1 className='text-3xl font-bold text-accent hidden'>{product.name}</h1>
+                        <h1 className='text-3xl font-bold text-accent hidden md:block m-2'>{product.name}</h1>
                         <p className='text-lg text-slate-800 text-center'>Category: {product.category}</p>
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoMdClose } from "react-icons/io";
-import { MdHome, MdPhotoLibrary, MdBookOnline, MdPhone, MdInfo, MdRestaurantMenu, MdEvent, MdLocalOffer, MdHeadset } from "react-icons/md";
+import { MdHome, MdPhotoLibrary, MdBookOnline, MdPhone, MdInfo, MdRestaurantMenu, MdEvent, MdLocalOffer, MdHeadset, MdAccountCircle } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
 const MobileNavPannel = (props) => {
@@ -38,6 +38,10 @@ const MobileNavPannel = (props) => {
               </div>
               <div className="text-[20px] text-accent m-2  cursor-pointer flex items-center" onClick={() => goto('/home/about')}>
                 <MdInfo className='mr-2' /> About
+              </div>
+
+              <div className="text-[20px] text-accent m-2  cursor-pointer flex items-center" onClick={() => goto('/home/login')}>
+                <MdAccountCircle className='mr-2' /> Login
               </div>
           
            
