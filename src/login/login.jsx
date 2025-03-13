@@ -3,11 +3,45 @@ import './login.css'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useGoogleLogin } from '@react-oauth/google'
+
 
 const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
+    const googleLogin = useGoogleLogin(
+
+        {onSuccess : (response) => {
+            console.log(response);
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/googlelogin`, {
+                    accesToken: response.access_token
+
+
+            }).then((responce)=>{
+                console.log(responce);
+                toast.success("Login Success")
+                const user = responce.data.user
+                localStorage.setItem("token", responce.data.token)
+
+                
+
+             
+
+                if(user?.role === "admin"){
+                    navigate('/admin')
+                }
+                if(user?.role === "customer"){
+                    navigate('/home')
+                }
+
+                
+            }).catch((e)=>{
+                console.log(e);
+            })
+            
+        }}
+    );
 
     function login() {
 
@@ -29,6 +63,10 @@ const LoginPage = () => {
             const user = res.data.user
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", JSON.stringify(user))
+            if(user.emailVerified == false){
+                navigate('/verify-email')
+                return
+            }
             if(user?.role === "admin"){
                navigate('/admin')
             }
@@ -60,6 +98,7 @@ const LoginPage = () => {
                 <input type="password" placeholder='Password' className='w-[300px] h-[50px] bg-transparent border-b-2 border-white text-white text-2xl outline-none' value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button className='w-[300px] h-[50px] bg-[#f0ad38] text-white text-xl my-5 rounded-lg hover:bg-[#ffb12bee]' onClick={login} >Login</button>
 
+                <button className='w-[300px] h-[50px] bg-[#f0ad38] text-white text-xl my-5 rounded-lg hover:bg-[#ffb12bee]' onClick={googleLogin} >Login With Google</button>
 
 
 
