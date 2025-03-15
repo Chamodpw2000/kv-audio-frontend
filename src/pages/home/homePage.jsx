@@ -9,6 +9,8 @@ import LoginPage from '../../login/login'
 import ProductOverview from './productOverview'
 import BookingsPage from './bookingPage'
 import Orders from '../admin/bookings'
+import Home from './home'
+import Footer from '../../components/footer'
 
 const HomePage = () => {
     return (
@@ -18,9 +20,11 @@ const HomePage = () => {
         
           
 
-            <div className="h-[calc(100vh-100px)] w-full bg-primary">
+            <div className="h-full w-full bg-primary">
                 <Routes>
-                    <Route path="/" element={<h1>Welcome to Home Page</h1>} />
+
+                    <Route path="/" element={< Home/>} />
+
                     <Route path="contact" element={<Contact />} />
                     <Route path="items" element={<Items />} />
                     <Route path="gallery" element={<Gallery />} />
@@ -31,12 +35,10 @@ const HomePage = () => {
                     <Route path="mybookings" element={<Orders />} />
 
 
-
-                    
-
-
                 </Routes>
             </div>
+
+            <Footer />
         </>
     )
 }
