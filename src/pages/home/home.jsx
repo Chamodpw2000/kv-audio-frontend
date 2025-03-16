@@ -1,5 +1,7 @@
 import React from 'react'
 import './home.css'
+import Slider from '../../components/swiper'
+import FeedbackSlider from '../../components/feedbackSwiper'
 
 const Home = () => {
   return (
@@ -92,7 +94,19 @@ const Home = () => {
 
       <div>
       <p className='text-center text-2xl font-bold text-accent'>Our Products</p>
+      <Slider />
       </div>
+
+
+<div>
+
+<p className='text-center text-2xl font-bold text-accent'>Customer Feedbacks</p>
+
+<FeedbackSlider />
+
+
+</div>
+      
 
 
 
