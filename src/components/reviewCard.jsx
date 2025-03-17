@@ -9,7 +9,7 @@ const ReviewCard = ({ review }) => {
   const comment = review?.comment || "No comment available.";
   const date = review?.date ? new Date(review.date).toLocaleDateString() : "Unknown date";
   const photos = Array.isArray(review?.photos) ? review.photos : [];
-  const itemName = review?.itemName || "Unknown item";
+  const itemName = review?.itemName || null;
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col md:flex-row gap-4">
@@ -32,13 +32,14 @@ const ReviewCard = ({ review }) => {
 
 
         {/* Name & Email */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-md font-semibold">Feedback on - {itemName}</h3>
-          
-        </div>
+        {itemName && (
+          <div className="flex items-center justify-between">
+            <h3 className="text-md font-semibold">Feedback on - {itemName}</h3>
+          </div>
+        )}
 
 
-        
+
 
         {/* Rating */}
         <div className="flex items-center gap-1 mt-1">
