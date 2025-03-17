@@ -9,10 +9,10 @@ const ProductCard = ({ item }) => {
     <div className="max-w-sm overflow-hidden transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl m-5 transform hover:-translate-y-1">
       {/* Product Image with Hover Effect */}
       <div className="relative overflow-hidden group">
-        <img 
-          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" 
-          src={item?.image?.[0] || "/placeholder.jpg"} 
-          alt={item?.name || "Product Image"} 
+        <img
+          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+          src={item?.image?.[0] || "/placeholder.jpg"}
+          alt={item?.name || "Product Image"}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
@@ -24,12 +24,11 @@ const ProductCard = ({ item }) => {
           <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors">
             {item?.name || "No Name Available"}
           </h2>
-          <span 
-            className={`px-2 py-1 text-xs font-bold uppercase rounded-full ${
-              item?.availability 
-                ? "bg-green-100 text-green-700" 
+          <span
+            className={`px-2 py-1 text-xs font-bold uppercase rounded-full ${item?.availability
+                ? "bg-green-100 text-green-700"
                 : "bg-red-100 text-red-700"
-            }`}
+              }`}
           >
             {item?.availability ? "In Stock" : "Out of Stock"}
           </span>
@@ -74,10 +73,12 @@ const ProductCard = ({ item }) => {
         {/* View Details Button */}
         <Link 
           to={item?.key ? `/home/product/${item.key}` : "#"}
-          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-2 hover:border-secondary transition-colors"
+          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary  hover:border-secondary  "
         >
           View Details
         </Link>
+
+
       </div>
     </div>
   );

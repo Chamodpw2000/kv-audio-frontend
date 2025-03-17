@@ -17,6 +17,7 @@ const FeedbackSlider = () => {
 
 
     const [feedbacks, setFeedbacks] = useState([]);
+    const [modelOpen, setModelOpen] = useState(false);
     // const [state, setState] = useState("loading") // loading, success, error
 
 
@@ -51,7 +52,7 @@ const FeedbackSlider = () => {
                 <Swiper
                     spaceBetween={25}
                     slidesPerView={1}
-                    pagination={{ clickable: true }}
+                
                     loop={true}
                     autoplay={{
                         delay: 4000,
@@ -71,7 +72,16 @@ const FeedbackSlider = () => {
                     )}
 
                 </Swiper>
+
+
             </div>
+
+            <button
+                type="submit"
+                className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary  hover:border-secondary  "
+            >
+                Add a Review
+            </button>
         </div>
     );
 };
