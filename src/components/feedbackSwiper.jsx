@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 
 const StarRating = ({ rating, setRating }) => {
   const stars = [1, 2, 3, 4, 5];
-  
+
   return (
     <div className="flex items-center space-x-1">
       {stars.map((star) => (
@@ -23,9 +23,7 @@ const StarRating = ({ rating, setRating }) => {
           className="focus:outline-none"
         >
           <svg
-            className={`w-8 h-8 ${
-              star <= rating ? 'text-yellow-400' : 'text-gray-300'
-            }`}
+            className={`w-8 h-8 ${star <= rating ? 'text-yellow-400' : 'text-gray-300'}`}
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -42,146 +40,153 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 const FeedbackSlider = () => {
-    const [feedbacks, setFeedbacks] = useState([]);
-    const [modelOpen, setModelOpen] = useState(false);
-    const [itemId, setItemId] = useState('');
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState('');
-    const [productImages, setProductImages] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [fetching, setFetching] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);  // Initialize with empty array instead of undefined
+  const [modelOpen, setModelOpen] = useState(false);
+  const [itemId, setItemId] = useState('');
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [productImages, setProductImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
 
-    useEffect(() => {
-        const fetchFeedbacks = async () => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-                });
-                
-                if (Array.isArray(res.data.reviews)) {
-                    setFeedbacks(res.data.reviews);
-                } else {
-                    console.error("Unexpected response format:", res.data);
-                    setFeedbacks([]);
-                }
-            } catch (err) {
-                console.error("Error fetching reviews:", err.response ? err.response.data : err.message);
-                setFeedbacks([]);
-            }
-        };
-        
-        fetchFeedbacks();
-    }, [fetching]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === "id") setItemId(value);
-        else if (name === "comment") setComment(value);
-    };
-
-    const handleAddItem = async () => {
-        if (!rating || !comment) {
-            toast.error('Please fill in all required fields.');
-            return;
-        }
-
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      try {
         const token = localStorage.getItem('token');
         if (!token) {
-            toast.error('Please login to add a review.');
-            return;
+          toast.error('Please login to view reviews.');
+          return;
         }
 
-        setLoading(true);
-        try {
-            const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
-            await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/reviews`,
-                { itemId, rating, comment, photos: imageUrls },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
 
-            toast.success("Review added successfully");
-            setItemId('');
-            setRating(0);
-            setComment('');
-            setProductImages([]);
-            setModelOpen(false);
-            setFetching(!fetching);
-        } catch (error) {
-            console.error(error);
-            toast.error('Error adding review. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        console.log("Data are", res.data);
+        setFeedbacks(res.data);
+      } catch (err) {
+        console.error("Error fetching reviews:", err.response ? err.response.data : err.message);
+        setFeedbacks([]);  // Set to empty array on error
+      }
     };
 
-    return (
-        <div>
-            <div className="py-4 mx-4">
-                <Swiper
-                    spaceBetween={25}
-                    slidesPerView={1}
-                    loop={true}
-                    autoplay={{ delay: 4000, disableOnInteraction: false }}
-                    modules={[Autoplay, Pagination, Navigation]}
-                >
-                    {feedbacks.length === 0 ? (
-                        <p className="text-center text-gray-500">No feedback available</p>
-                    ) : (
-                        feedbacks.map((feedback, index) => (
-                            <SwiperSlide key={index} className="flex justify-center items-center">
-                                <ReviewCard review={feedback} />
-                            </SwiperSlide>
-                        ))
-                    )}
-                </Swiper>
+    fetchFeedbacks();
+  }, []);
 
-                <button
-                    className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
-                    onClick={() => setModelOpen(true)}
-                >
-                    Add a Review
-                </button>
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "id") setItemId(value);
+    else if (name === "comment") setComment(value);
+  };
+
+  const handleAddItem = async () => {
+    if (!rating || !comment) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please login to add a review.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/reviews`,
+        { itemId, rating, comment, photos: imageUrls },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      toast.success("Review added successfully");
+      setItemId('');
+      setRating(0);
+      setComment('');
+      setProductImages([]);
+      setModelOpen(false);
+     
+      // Refresh feedbacks after adding a new one
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`);
+      setFeedbacks(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error('Error adding review. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <div className="py-4 mx-4">
+        <Swiper
+          spaceBetween={25}
+          slidesPerView={1}
+          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+          {feedbacks && feedbacks.length > 0 ? (
+            feedbacks.map((feedback, index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+                <ReviewCard review={feedback} />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide className="flex justify-center items-center">
+              <p className="text-center text-gray-500">No feedback available</p>
+            </SwiperSlide>
+          )}
+        </Swiper>
+
+        <button
+          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+          onClick={() => setModelOpen(true)}
+        >
+          Add a Review
+        </button>
+      </div>
+
+      {modelOpen && (
+        <div className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-5 flex-col">
+          <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
+            <h1 className='text-2xl font-bold text-center text-accent'>Add a Review</h1>
+            <label className='my-2'>Item Id (Optional)
+              <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={itemId} name="id" onChange={handleChange} />
+            </label>
+            <label className='my-2'>Rating
+              <div className="mt-2">
+                <StarRating rating={rating} setRating={setRating} />
+              </div>
+            </label>
+            <label className='my-2'>Comment
+              <textarea className='w-full rounded-xl h-[80px] border-2 border-secondary p-2' value={comment} name="comment" onChange={handleChange} />
+            </label>
+            <label className='my-2'>Add Photos
+              <input type="file" multiple onChange={(e) => setProductImages(e.target.files)} />
+            </label>
+            <div className='flex justify-center items-center w-full gap-4 py-2'>
+              <button
+                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
+                onClick={handleAddItem}
+                disabled={loading}
+              >
+                {loading ? 'Adding...' : 'Add Review'}
+              </button>
+              <button
+                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
+                onClick={() => setModelOpen(false)}
+              >
+                Cancel
+              </button>
             </div>
-
-            {modelOpen && (
-                <div className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-5 flex-col">
-                    <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
-                        <h1 className='text-2xl font-bold text-center text-accent'>Add a Review</h1>
-                        <label className='my-2'>Item Id (Optional)
-                            <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={itemId} name="id" onChange={handleChange} />
-                        </label>
-                        <label className='my-2'>Rating
-                            <div className="mt-2">
-                                <StarRating rating={rating} setRating={setRating} />
-                            </div>
-                        </label>
-                        <label className='my-2'>Comment
-                            <textarea className='w-full rounded-xl h-[80px] border-2 border-secondary p-2' value={comment} name="comment" onChange={handleChange} />
-                        </label>
-                        <label className='my-2'>Add Photos
-                            <input type="file" multiple onChange={(e) => setProductImages(e.target.files)} />
-                        </label>
-                        <div className='flex justify-center items-center w-full gap-4 py-2'>
-                            <button
-                                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
-                                onClick={handleAddItem}
-                                disabled={loading}
-                            >
-                                {loading ? 'Adding...' : 'Add Review'}
-                            </button>
-                            <button
-                                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
-                                onClick={() => setModelOpen(false)}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default FeedbackSlider;
