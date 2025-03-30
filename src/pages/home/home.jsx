@@ -92,7 +92,7 @@ const Home = () => {
             <p className='text-center text-lg'>Lighting solutions to set the mood</p>
           </div>
           <div className='flex flex-col items-center justify-center bg-primary rounded-3xl p-3 m-2'>
-            <img src="./furnitures.jpg" alt="furniture" className='h-[120px] md:h-[450px] md:h-[450px] w-[300px] rounded-3xl object-cover' />
+            <img src="./furnitures.jpg" alt="furniture" className='h-[120px]  md:h-[450px] w-[300px] rounded-3xl object-cover' />
             <p className='text-center text-lg font-bold py-2 text-secondary'>Furniture</p>
             <p className='text-center text-lg'>Stylish and comfortable furniture for your guests</p>
           </div>
