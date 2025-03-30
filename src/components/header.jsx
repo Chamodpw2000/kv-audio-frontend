@@ -19,7 +19,7 @@ const Header = ({auth}) => {
   const token = localStorage.getItem('token');
 
   return (
-    <header className='w-full h-[70px] shadow-xl flex justify-center items-center bg-accent text-white fixed
+    <header className='w-full h-[70px]  flex justify-center items-center bg-accent text-white fixed
      top-0 left-0 z-50'>
       <img src="/logo.png" alt="logo" className="w-[70px] h-[70px] object-cover absolute left-5" />
       <div className='w-[800px] flex items-center justify-between'>

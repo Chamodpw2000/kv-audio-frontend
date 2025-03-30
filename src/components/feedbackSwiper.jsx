@@ -117,10 +117,40 @@ const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>
-      <div className="py-4 mx-4">
+      <div className="py-4 mx-4 md:hidden">
         <Swiper
           spaceBetween={25}
           slidesPerView={1}
+          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+          {feedbacks && feedbacks.length > 0 ? (
+            feedbacks.map((feedback, index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+                <ReviewCard review={feedback} />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide className="flex justify-center items-center">
+              <p className="text-center text-gray-500">No feedback available</p>
+            </SwiperSlide>
+          )}
+        </Swiper>
+
+       {user?.role=="customer" &&  <button
+          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+          onClick={() => setModelOpen(true)}
+        >
+          Add a Review
+        </button>}
+      </div>
+
+
+      <div className="py-4 mx-4 hidden md:block">
+        <Swiper
+          spaceBetween={25}
+          slidesPerView={3}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
