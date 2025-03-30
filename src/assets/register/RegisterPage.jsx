@@ -3,6 +3,7 @@ import './register.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 
 
@@ -43,7 +44,7 @@ const RegisterPage = () => {
         ).then((res)=>{
             console.log(res);
             toast.success("Registered Successfully");
-            navigate('/login');
+            navigate('/home/login');
         }).catch((err)=>{
             console.log(err);
             toast.error(err?.response?.data?.error||"An error occured");
@@ -51,8 +52,8 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className='w-full h-screen flex justify-center items-center bg-picture'>
-            <div className='w-[400px] h-auto backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col p-5'>
+        <div className='w-full min-h-screen flex justify-center items-center bg-picture mt-5 py-5'>
+            <div className='w-[400px] h-auto backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col p-2 mt-5'>
 
                 <img src="/logo.png" className='w-[100px] h-[100px] object-cover mb-4' />
 
@@ -105,9 +106,28 @@ const RegisterPage = () => {
                 >
                     Register
                 </button>
+<div className='flex flex-col items-center justify-center'>
+
+<p className='text-white'> 
+    Already have an account?
+ </p>
+
+<Link to="/home/login" className='hover:text-accent font-bold text-white'>
+Login here !</Link>
+    
+</div>
+
+
             </div>
         </div>
     );
 };
 
 export default RegisterPage;
+
+
+
+
+
+
+

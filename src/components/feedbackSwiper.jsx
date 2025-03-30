@@ -48,15 +48,12 @@ const FeedbackSlider = () => {
   const [productImages, setProductImages] = useState([]);
   const [loading, setLoading] = useState(false);
   
-
+const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          toast.error('Please login to view reviews.');
-          return;
-        }
+     
 
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -141,12 +138,12 @@ const FeedbackSlider = () => {
           )}
         </Swiper>
 
-        <button
+       {user?.role=="customer" &&  <button
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
           onClick={() => setModelOpen(true)}
         >
           Add a Review
-        </button>
+        </button>}
       </div>
 
       {modelOpen && (

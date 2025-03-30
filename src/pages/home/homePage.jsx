@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header'
 import { Route, Routes } from 'react-router-dom'
 import Contact from './contact'
@@ -11,11 +11,14 @@ import BookingsPage from './bookingPage'
 import Orders from '../admin/bookings'
 import Home from './home'
 import Footer from '../../components/footer'
+import RegisterPage from '../../assets/register/RegisterPage'
 
 const HomePage = () => {
+
+    const [auth, setAuth] = useState(false)
     return (
         <>
-            <Header />
+            <Header auth={auth}/>
 
         
           
@@ -28,11 +31,13 @@ const HomePage = () => {
                     <Route path="contact" element={<Contact />} />
                     <Route path="items" element={<Items />} />
                     <Route path="gallery" element={<Gallery />} />
-                    <Route path="login" element={<LoginPage />} />
+                    <Route path="login" element={<LoginPage setAuth={setAuth} auth={auth} />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="product/:id" element={<ProductOverview/>} />
                     <Route path="booking" element={<BookingsPage />} />
                     <Route path="mybookings" element={<Orders />} />
+                    <Route path="register" element={<RegisterPage setAuth={setAuth} auth={auth} />} />
+
 
 
                 </Routes>
