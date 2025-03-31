@@ -40,8 +40,10 @@ const Slider = () => {
 
 
     return (
-        <div className="py-4 mx-4">
-            <div>
+       <div>
+
+<div className="py-4 mx-4">
+            <div className='md:hidden'>
                 <Swiper
                     spaceBetween={25}
                     slidesPerView={1}
@@ -67,6 +69,37 @@ const Slider = () => {
                 </Swiper>
             </div>
         </div>
+
+
+
+        <div className="py-4 mx-4 hidden md:block">
+            <div>
+                <Swiper
+                    spaceBetween={25}
+                    slidesPerView={3}
+        
+                    loop={true}
+                    autoplay={{
+                        delay: 4000,
+                        disableOnInteraction: false // This prevents autoplay from stopping on user interaction
+                    }}
+                 
+                    modules={[Autoplay, Pagination, Navigation]} // Include Navigation since you imported it
+                >
+                    {products.map((product, index) => (
+                        <SwiperSlide key={index} className="flex justify-center items-center">
+
+
+                            {
+
+                                <ProductCard item={product} />
+                            }
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </div>
+       </div>
     );
 };
 
