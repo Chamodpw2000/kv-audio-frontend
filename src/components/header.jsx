@@ -24,7 +24,6 @@ const Header = ({auth}) => {
       <img src="/logo.png" alt="logo" className="w-[70px] h-[70px] object-cover absolute left-5" />
       <div className='w-[800px] flex items-center justify-between'>
         <Link to="/" className='hidden text-[20px] m-1 md:block'>Home</Link>
-        <Link to="/home/contact" className='hidden text-[20px] m-1 md:block'>Contact</Link>
         <Link to="/home/gallery" className='hidden text-[20px] m-1 md:block'>Gallery</Link>
         <Link to="/home/items" className='hidden text-[20px] m-1 md:block'>Items</Link>
         {user?.role=="customer"&&<Link to="/home/mybookings" className='hidden text-[20px] m-1 md:block'>My Bookings</Link>}

@@ -28,7 +28,6 @@ const HomePage = () => {
 
                     <Route path="/" element={< Home/>} />
 
-                    <Route path="contact" element={<Contact />} />
                     <Route path="items" element={<Items />} />
                     <Route path="gallery" element={<Gallery />} />
                     <Route path="login" element={<LoginPage setAuth={setAuth} auth={auth} />} />
