@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import mediaUpload from '../utils/mediaUpload';
+import { toast } from 'react-hot-toast';
+
 
 const AddGallaryItem = () => {
+
+  
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     description: '',
-    image: null
+    image: null,
+    title: ''
   });
   const [previewUrl, setPreviewUrl] = useState(null);
   const [error, setError] = useState('');
@@ -52,9 +58,22 @@ const AddGallaryItem = () => {
     }
   };
 
+
+
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    
+    
+      
+
+      
+    
+
+
+
     
     // Validate form
     if (!formData.description.trim()) {
@@ -71,21 +90,53 @@ const AddGallaryItem = () => {
     setError('');
     
     try {
+
+      const imageUrl =await mediaUpload(formData.image);
       // Create form data for file upload
-      const data = new FormData();
-      data.append('description', formData.description);
-      data.append('image', formData.image);
+    
+const data = {
+        description: formData.description,
+        image: imageUrl,
+        title: formData.title
+}
+    
       
-      // Replace with your actual API endpoint
-      // const response = await axios.post('/api/gallery/add', data);
-      
-      // Simulate API call for now
-     console.log("data is" , formData);
+  
+     console.log("url is" , imageUrl);
+     const token = localStorage.getItem('token');
+     if (!token) {
+       toast.error('Please login to add items.');
+       return;
+     }
+
+     console.log("data is", data);
+     
+ 
+
+     axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/gallery`, data, {
+        headers: {
+
+          Authorization: `Bearer ${token}`,
+
+
+
+        }
+      }
+      ).then((res) => {
+        console.log(res.data);
+        toast.success("Item added successfully");
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error('An error occurred while adding the item.');
+      })
+
+
      
 
 
       
-      // Success! Redirect back to gallery management
+    
       navigate('/admin/gallary');
     } catch (err) {
       console.error('Error adding item:', err);
@@ -152,6 +203,22 @@ const AddGallaryItem = () => {
           </div>
           
           {/* Description */}
+          <div>
+            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">
+             Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter description for this image"
+            ></input>
+          </div>
+
+
           <div>
             <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">
               Description
