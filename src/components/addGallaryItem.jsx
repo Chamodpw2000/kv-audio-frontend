@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import mediaUpload from '../utils/mediaUpload';
+import { toast } from 'react-hot-toast';
+
 
 const AddGallaryItem = () => {
+
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     description: '',
-    image: null
+    image: null,
+    title: ''
   });
   const [previewUrl, setPreviewUrl] = useState(null);
   const [error, setError] = useState('');
@@ -30,7 +36,7 @@ const AddGallaryItem = () => {
         setError('Please select an image file (jpg, png, etc)');
         return;
       }
-      
+
       // Check file size (limit to 5MB)
       if (file.size > 5 * 1024 * 1024) {
         setError('Image size should be less than 5MB');
@@ -41,7 +47,7 @@ const AddGallaryItem = () => {
         ...formData,
         image: file
       });
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -52,45 +58,93 @@ const AddGallaryItem = () => {
     }
   };
 
+
+
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+
+
+
+
+
+
+
+
+
+
     // Validate form
     if (!formData.description.trim()) {
       setError('Description is required');
       return;
     }
-    
+
     if (!formData.image) {
       setError('Please select an image');
       return;
     }
-    
+
     setLoading(true);
     setError('');
-    
+
     try {
+
+      const imageUrl = await mediaUpload(formData.image);
       // Create form data for file upload
-      const data = new FormData();
-      data.append('description', formData.description);
-      data.append('image', formData.image);
-      
-      // Replace with your actual API endpoint
-      // const response = await axios.post('/api/gallery/add', data);
-      
-      // Simulate API call for now
-     console.log("data is" , formData);
-     
+
+      const data = {
+        description: formData.description,
+        image: imageUrl,
+        title: formData.title
+      }
 
 
-      
-      // Success! Redirect back to gallery management
-      navigate('/admin/gallary');
+
+      console.log("url is", imageUrl);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('Please login to add items.');
+        return;
+      }
+
+      console.log("data is", data);
+
+
+
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/gallery`, data, {
+        headers: {
+
+          Authorization: `Bearer ${token}`,
+
+
+
+        }
+      }
+      ).then((res) => {
+        console.log(res.data);
+        toast.success("Item added successfully");
+      })
+        .catch((err) => {
+          console.error(err);
+          toast.error('An error occurred while adding the item.');
+        })
+
+
+
+
+
+
+
+    
+   
     } catch (err) {
       console.error('Error adding item:', err);
       setError(err.response?.data?.message || 'Failed to add item. Please try again.');
     } finally {
+      setTimeout(() => {navigate("/admin/gallary")}, 2000); 
+
       setLoading(false);
     }
   };
@@ -101,7 +155,7 @@ const AddGallaryItem = () => {
         <div className="bg-red-500 px-6 py-4">
           <h1 className="text-2xl font-bold text-white">Add New Gallery Item</h1>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
           {/* Error message */}
           {error && (
@@ -109,7 +163,7 @@ const AddGallaryItem = () => {
               <p className="text-red-700">{error}</p>
             </div>
           )}
-          
+
           {/* Image Upload */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -118,9 +172,9 @@ const AddGallaryItem = () => {
             <div className="mt-1 flex items-center space-x-4">
               <div className="flex-shrink-0">
                 {previewUrl ? (
-                  <img 
-                    src={previewUrl} 
-                    alt="Preview" 
+                  <img
+                    src={previewUrl}
+                    alt="Preview"
                     className="h-40 w-40 object-cover rounded-md border border-gray-300"
                   />
                 ) : (
@@ -150,8 +204,24 @@ const AddGallaryItem = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Description */}
+          <div>
+            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">
+              Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter description for this image"
+            ></input>
+          </div>
+
+
           <div>
             <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">
               Description
@@ -166,7 +236,7 @@ const AddGallaryItem = () => {
               placeholder="Enter description for this image"
             ></textarea>
           </div>
-          
+
           {/* Form Actions */}
           <div className="flex items-center justify-end space-x-4 pt-4">
             <button
@@ -179,9 +249,8 @@ const AddGallaryItem = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {loading ? (
                 <span className="flex items-center">

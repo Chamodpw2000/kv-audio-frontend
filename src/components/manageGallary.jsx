@@ -4,70 +4,169 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+
 
 const ManageGallary = () => {
   const navigate = useNavigate();
+
+  const [isEdditing, setIsEditing] = useState(false);
   
-  const [items, setItems] = React.useState([
-    {
-      key: "1",
-      description: "Description 1 udbvuufhu with a very long text that needs to be wrapped properly",
-      image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-    },
-    {
-      key: "2",
-      description: "Description 2 enwifighegrighuhe fuiefhu fwuefhwiufh wiufhw wuehuwihd wedweh dwewehdw eweduwhduw hdwoi hduwhdwe duwehdowehd woied hweo ohwe doiwe",
-      image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-    },
-    {
-      key: "3",
-      description: "Description 3 yewduiwegdwuh wuihuiweh fwehewuhef wuehwh euwhfuwifhuwfhuwfhw fwiufhwfuhwfuiw fwuifhuwhfuwf hw fuwf wuif",
-      image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-    },
-    {
-      key: "4", 
-      description: "Description 4 nfbfufufufuwqebfwehf wfwfuwfuifuinfuiwfnuef feuiefufewnndndwendewd ewdiejjoiwedioewdioewdwdwd e dewdjewdjewidjew",
-      image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-    },
-    {
-      key: "5",
-      description: "Description 5 guwgfweyfgwfw fw fwuediweudhewudheudheudhe duehdwqiuedpqhwuepqhuef fhqweuiiwedhuwedwue dwuiedhuewid",
-      image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-    },
-    {
-        key: "5",
-        description: "Description 5 guwgfweyfgwfw fw fwuediweudhewudheudheudhe duehdwqiuedpqhwuepqhuef fhqweuiiwedhuwedwue dwuiedhuewid",
-        image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-      },
-      {
-        key: "5",
-        description: "Description 5 guwgfweyfgwfw fw fwuediweudhewudheudheudhe duehdwqiuedpqhwuepqhuef fhqweuiiwedhuwedwue dwuiedhuewid",
-        image: "https://imgv3.fotor.com/images/blog-cover-image/a-shadow-of-a-boy-carrying-the-camera-with-red-sky-behind.jpg",
-      }
-  ]);
+  const [items, setItems] = React.useState();
   
-  const [itemsLoaded, setitemsLoaded] = React.useState(true);
+  const [itemsLoaded, setitemsLoaded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedDescription, setSelectedDescription] = useState("");
-  
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const [loadItems, setLoadItems] = useState(false);
+  useEffect(()=>{
+    const fetchData = async()=>{
+      setitemsLoaded(false);
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gallery`)
+    .then((res)=>{
+
+      console.log(res.data);
+      setItems(res.data);
+      setitemsLoaded(true);
+      
+    }).catch((err)=>{
+      console.log(err);
+      setitemsLoaded(true);
+      toast.error("An error occured whule fetching data");
+
+    })}
+    fetchData();
+
+  },[loadItems])
   // Add this function to handle delete
   const handleDelete = (key) => {
-    console.log("Deleting item with key:", key);
+
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        try {
+
+          const token = localStorage.getItem('token');
+          if (!token) {
+            toast.error('Please login to delete items.');
+            return;
+          }
+          axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/gallery/${key}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            toast.success("Item deleted successfully");
+            setitemsLoaded(false);
+           setModalOpen(false);
+           setLoadItems(!loadItems);
+            
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error('An error occurred while deleting the item.');
+          });
+          
+        } catch (error) {
+          console.error("Error deleting item:", error);
+          toast.error("An error occurred while deleting the item.");
+          
+        }
+
+
+ 
+      }
+    });
+    
+   
     // Implement your delete logic here
   }
+
+  const editCaption = () => {
+   
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Save it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            toast.error('Please login to edit items.');
+            return;
+          }
+          axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/gallery/${selectedId}`, {description:selectedDescription,
+            title:selectedTitle
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            toast.success("Item edited successfully");
+           setModalOpen(false);
+           setLoadItems(!loadItems);
+        
+            
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error('An error occurred while editing the item.');
+          });
+          
+        } catch (error) {
+          console.error("Error editing item:", error);
+          toast.error("An error occurred while editing the item.");
+          
+        }
+        
+      }
+    });
+    
+  }
   
-  const handleView = (image, description) => {
+  const handleView = (image, description, title , id) => {
+    console.log(image, description, title , id);
+    
     setSelectedImage(image);
     setSelectedDescription(description);
+    setSelectedTitle(title);
+    setSelectedId(id);
     setModalOpen(true);
   }
   
   const closeModal = () => {
+    setIsEditing(false);
     setModalOpen(false);
     setSelectedImage(null);
     setSelectedDescription("");
+    setSelectedTitle("");
+    setSelectedId("");
+
+
   }
+
+
   
   return (
     <div className="w-full min-h-screen relative bg-gray-100 p-6 flex justify-center items-center flex-col">
@@ -82,12 +181,7 @@ const ManageGallary = () => {
           <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <div className="p-4 bg-red-500 text-white flex justify-between items-center">
               <h3 className="text-xl font-semibold">Image Preview</h3>
-              <button 
-                onClick={closeModal}
-                className="text-white hover:text-gray-200 text-2xl"
-              >
-                &times;
-              </button>
+          
             </div>
             <div className="p-4 overflow-auto flex-1">
               <img 
@@ -95,9 +189,31 @@ const ManageGallary = () => {
                 alt="Preview" 
                 className="max-w-full h-auto mx-auto"
               />
-              <p className="mt-4 text-gray-700">{selectedDescription}</p>
+
+              <div>
+                <h3 className="text-xl font-semibold mt-4">Title</h3>
+              </div>
+             {!isEdditing && <p className="mt-4 text-gray-700">{selectedTitle}</p>}
+             {isEdditing && <textarea className="mt-4 text-gray-700 w-full" value={selectedTitle} onChange={(e) => setSelectedTitle(e.target.value)}></textarea>}
+              <div>
+                <h3 className="text-xl font-semibold mt-4">Description</h3>
+              </div>
+             {!isEdditing && <p className="mt-4 text-gray-700">{selectedDescription}</p>}
+             {isEdditing && <textarea className="mt-4 text-gray-700 w-full" value={selectedDescription} onChange={(e) => setSelectedDescription(e.target.value)}></textarea>}
             </div>
             <div className="p-4 bg-gray-100 flex justify-end">
+            {!isEdditing && <button
+                onClick={()=>{setIsEditing(!isEdditing)}}
+                className="bg-blue-500 mx-2 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition"
+              >
+                Edit
+              </button>}
+
+              {
+                isEdditing && <button  onClick={editCaption} className='bg-blue-500 mx-2 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition'>
+               Save Changers
+                </button>
+              }
               <button
                 onClick={closeModal}
                 className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md transition"
@@ -119,23 +235,25 @@ const ManageGallary = () => {
             <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
               <thead className="bg-red-500 text-white">
                 <tr>
-                  <th className="py-3 px-5 text-left">Key</th>
+                  <th className="py-3 px-5 text-left">Id</th>
                   <th className="py-3 px-5 text-left">Photo</th>
                   <th className="py-3 px-5 text-left">Description</th>
+                  <th className="py-3 px-5 text-left">Title</th>
+
                   <th className="py-3 px-5 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <tr key={item.key} className="border-b hover:bg-gray-50 transition">
-                      <td className="py-3 px-5">{item.key}</td>
+                    <tr key={item.id} className="border-b hover:bg-gray-50 transition">
+                      <td className="py-3 px-5">{item.id}</td>
                       <td className="py-3 px-5">
                         <img
-                          src={item.image}
+                          src={item.imageUrl}
                           alt={item.description}
                           className="w-20 h-20 object-cover rounded-md cursor-pointer hover:opacity-80"
-                          onClick={() => handleView(item.image, item.description)}
+                          onClick={() => handleView(item.imageUrl, item.description, item.title, item.id)}
                         />
                       </td>
                       <td className="py-3 px-5">
@@ -143,12 +261,17 @@ const ManageGallary = () => {
                           {item.description}
                         </div>
                       </td>
+                      <td className="py-3 px-5">
+                        <div className="max-w-xs break-words whitespace-pre-wrap">
+                          {item.title}
+                        </div>
+                      </td>
                       <td className="py-3 px-5 text-center">
                         <div className="flex justify-center gap-3 w-full">
                           {/* View Button */}
                           <button
                             onClick={() => {
-                              handleView(item.image, item.description)
+                              handleView(item.imageUrl, item.description, item.title, item.id)
                             }}
                             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
                           >
@@ -156,7 +279,7 @@ const ManageGallary = () => {
                           </button>
                           {/* Delete Button */}
                           <button
-                            onClick={() => handleDelete(item.key)}
+                            onClick={() => handleDelete(item.id)}
                             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
                           >
                             Delete
