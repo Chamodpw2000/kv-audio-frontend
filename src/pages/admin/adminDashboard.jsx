@@ -12,6 +12,10 @@ import Users from './users'
 import Bookings from './bookings'
 import Orders from './bookings'
 import axios from 'axios'
+import { IoMdPhotos } from "react-icons/io";
+import ManageGallary from '../../components/manageGallary'
+import AddGallaryItem from '../../components/addGallaryItem'
+
 const AdminDashboard = () => {
 
     
@@ -76,6 +80,12 @@ const AdminDashboard = () => {
                     </Link>
 
 
+                    <Link to="/admin/gallary" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
+                        <IoMdPhotos className="w-[25px] h-[25px]" />Gallary
+                    </Link>
+
+
+
 
 
 
@@ -96,6 +106,9 @@ const AdminDashboard = () => {
                         <Route path="/users" element={<Users />} />
                         <Route path="/additem" element={<AddItem />} />
                         <Route path="/items/edit" element={<UpdateItem />} />
+                        <Route path="/gallary" element={<ManageGallary />} />
+                        <Route path="/addphoto" element={<AddGallaryItem/>} />
+
 
 
 

@@ -10,3 +10,17 @@
     
     
 }
+
+
+.bg-picture1{
+    background-image: url('./hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    
+    
+    
+}
