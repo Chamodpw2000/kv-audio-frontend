@@ -8,7 +8,7 @@ import GalleryCard from './gallaryItemCard';
 
 const GallerySlider = ({ items }) => {
     return (
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full p-5 mx-auto h-full   ">
             <div className="py-4 px-4">
                 <Swiper
                     slidesPerView={1}
@@ -25,14 +25,14 @@ const GallerySlider = ({ items }) => {
                     {items && items.length > 0 ? (
                         items.map((item, index) => (
                             <SwiperSlide key={item.id || index}>
-                                <div className="flex justify-center items-center h-96 w-full">
+                                <div className="flex justify-center items-center h-full w-full">
                                     <GalleryCard item={item} />
                                 </div>
                             </SwiperSlide>
                         ))
                     ) : (
                         <SwiperSlide>
-                            <div className="flex justify-center items-center h-96 w-full bg-gray-100">
+                            <div className="flex justify-center items-center h-full w-full bg-gray-100">
                                 <p className="text-xl text-gray-500">No gallery items to display</p>
                             </div>
                         </SwiperSlide>
