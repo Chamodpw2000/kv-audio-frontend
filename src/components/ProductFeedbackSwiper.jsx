@@ -39,21 +39,19 @@ const StarRating = ({ rating, setRating }) => {
   );
 };
 
-const ProductFeedbackSlider = ({feedbacks}) => {
+const ProductFeedbackSlider = ({feedbacks,itemKey}) => {
 
-    console.log("sssssssssssssssssssssssssssssssssssssssssss");
-    
+  console.log("key", itemKey);
+  
 
-    console.log("feedbacks",feedbacks);
-    
-    console.log("sssssssssssssssssssssssssssssssssssssssssss");
+   
 
     const user = JSON.parse(localStorage.getItem('user'));
 
     
 
   const [modelOpen, setModelOpen] = useState(false);
-  const [itemId, setItemId] = useState('');
+  const [itemId, setItemId] = useState();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [productImages, setProductImages] = useState([]);
@@ -84,9 +82,12 @@ const ProductFeedbackSlider = ({feedbacks}) => {
       const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/reviews`,
-        { itemId, rating, comment, photos: imageUrls },
+        { itemId:itemKey, rating, comment, photos: imageUrls },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+
+   
 
       toast.success("Review added successfully");
       setItemId('');
@@ -99,8 +100,8 @@ const ProductFeedbackSlider = ({feedbacks}) => {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`);
    
     } catch (error) {
-      console.error(error);
-      toast.error('Error adding review. Please try again.');
+     
+      toast.error(error.response.data.message || 'Failed to add review. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -108,6 +109,8 @@ const ProductFeedbackSlider = ({feedbacks}) => {
 
   return (
     <div>
+
+<h1 className='text-3xl font-bold text-accent text-center hidden md:block m-2'>Reviews About this Product ! </h1>
       <div className="py-4 mx-4 md:hidden">
         <Swiper
           spaceBetween={25}
@@ -123,9 +126,9 @@ const ProductFeedbackSlider = ({feedbacks}) => {
               </SwiperSlide>
             ))
           ) : (
-            <SwiperSlide className="flex justify-center items-center">
-              <p className="text-center text-gray-500">No feedback available</p>
-            </SwiperSlide>
+            <div className="flex justify-center items-center ">
+              <p className="text-center text-gray-500 ">No Reviews Available for this Product</p>
+            </div>
           )}
         </Swiper>
 
@@ -133,7 +136,7 @@ const ProductFeedbackSlider = ({feedbacks}) => {
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
           onClick={() => setModelOpen(true)}
         >
-          Add a Review
+          Add a Review for this Item
         </button>}
       </div>
 
@@ -153,9 +156,13 @@ const ProductFeedbackSlider = ({feedbacks}) => {
               </SwiperSlide>
             ))
           ) : (
-            <SwiperSlide className="flex justify-center items-center">
-              <p className="text-center text-gray-500">No feedback available</p>
-            </SwiperSlide>
+              
+    <div className="flex justify-center items-center ">
+              <p className="text-center text-2xl text-gray-500 m-3">No Reviews Available for this Product</p>
+            </div>
+
+        
+        
           )}
         </Swiper>
 
@@ -163,7 +170,7 @@ const ProductFeedbackSlider = ({feedbacks}) => {
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
           onClick={() => setModelOpen(true)}
         >
-          Add a Review
+          Add a Review for this item. 
         </button>}
       </div>
 
@@ -172,7 +179,7 @@ const ProductFeedbackSlider = ({feedbacks}) => {
           <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
             <h1 className='text-2xl font-bold text-center text-accent'>Add a Review</h1>
             <label className='my-2'>Item Id (Optional)
-              <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={itemId} name="id" onChange={handleChange} />
+              <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2 ' value={itemKey} name="id" onChange={handleChange} readOnly />
             </label>
             <label className='my-2'>Rating
               <div className="mt-2">

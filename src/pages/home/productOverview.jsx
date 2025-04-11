@@ -17,6 +17,9 @@ const ProductOverview = () => {
 
     const params = useParams();
     const key = params.id;
+
+    
+    
     // console.log("id", key);
 
     const [loadingStatus, setLoadingStatus] = useState("loading");
@@ -24,6 +27,7 @@ const ProductOverview = () => {
     // console.log(params);
 
     const [feedbacks, setFeedbacks] = useState([]);
+    const [rating, setRating] = useState(0);
 
 
     const getProductReviews = async () => {
@@ -32,7 +36,9 @@ const ProductOverview = () => {
 
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/${key}`);
             console.log("Reviews are" ,res.data);
-            setFeedbacks(res.data);
+            setFeedbacks(res.data.reviews);
+            setRating(res.data.rating);
+
 
             setLoadingStatus("loaded");
 
@@ -96,15 +102,19 @@ const ProductOverview = () => {
                     </div>
                     <div className='w-full bg-blue-100  flex flex-col items-center md:w-[49%] py-3  '>
 
-                        <h1 className='text-3xl font-bold text-accent hidden md:block m-2'>{product.name}</h1>
-                        <p className='text-lg text-slate-800 text-center'>Category: {product.category}</p>
+                        <h1 className='text-3xl font-bold text-accent hidden md:block m-2'>{product?.name}</h1>
+                        <p className='text-lg text-slate-800 text-center'>Category: {product?.category}</p>
 
 
-                        <p className='text-lg text-slate-800 text-center'>{product.description}</p>
-                        <p className='text-xl text-accent font-bold'>LKR {product.price.toFixed(2)}</p>
+                        <p className='text-lg text-slate-800 text-center'>{product?.description}</p>
+                        <p className='text-xl text-accent font-bold'>LKR {product?.price.toFixed(2)}</p>
                         <div className="mt-4 text-sm text-gray-600">
-                            <span className='font-medium'>Dimensions: </span>{product.dimentions}
+                            <span className='font-medium'>Dimensions: </span>{product?.dimentions}
                         </div>
+                        {rating>0 ? <div className="mt-2 text-sm text-gray-600">
+                            <span className='font-medium'>Rating: </span>{rating}
+                        </div>: null}
+
 
                         {user?.role == "customer" && <button className='bg-accent text-white px-4 py-2 rounded-md mt-4' onClick={() => {
 
@@ -145,10 +155,10 @@ const ProductOverview = () => {
 
                 </div>
 
-                <div>
+                <div className='md:p-[100px]'>
                         
                         
-                        <ProductFeedbackSlider feedbacks={feedbacks} />
+                        <ProductFeedbackSlider feedbacks={feedbacks} itemKey={key}/>
                     </div>
 
                 </div>
