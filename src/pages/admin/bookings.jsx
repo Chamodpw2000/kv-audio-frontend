@@ -52,7 +52,7 @@ const Orders = () => {
     }
 
     return (
-        <div className='w-full flex flex-col items-center justify-center p-4'>
+        <div className='w-full flex flex-col items-center justify-center p-4 min-h-screen'>
             <h2 className='text-xl font-bold mb-4'>Orders</h2>
             {loading ? (
                 <p>Loading...</p>

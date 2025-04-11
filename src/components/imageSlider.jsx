@@ -5,7 +5,7 @@ const ImageSlider = (props) => {
 
   const images = props.images;
 
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState(images[0]||"");
 
 
 
