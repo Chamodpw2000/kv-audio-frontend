@@ -12,6 +12,7 @@ import Orders from '../admin/bookings'
 import Home from './home'
 import Footer from '../../components/footer'
 import RegisterPage from '../../assets/register/RegisterPage'
+import Profile from './profile'
 
 const HomePage = () => {
 
@@ -36,6 +37,7 @@ const HomePage = () => {
                     <Route path="booking" element={<BookingsPage />} />
                     <Route path="mybookings" element={<Orders />} />
                     <Route path="register" element={<RegisterPage setAuth={setAuth} auth={auth} />} />
+                    <Route path="myprofile" element={<Profile />} />
 
 
 

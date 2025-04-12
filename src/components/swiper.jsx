@@ -45,7 +45,7 @@ const Slider = () => {
 <div className="py-4 mx-4">
             <div className='md:hidden'>
                 <Swiper
-                    spaceBetween={25}
+                  
                     slidesPerView={1}
         
                     loop={true}
@@ -76,7 +76,7 @@ const Slider = () => {
             <div>
                 <Swiper
                     spaceBetween={25}
-                    slidesPerView={3}
+                    slidesPerView={4}
         
                     loop={true}
                     autoplay={{

@@ -5,7 +5,7 @@ const ProductCard = ({ item }) => {
   if (!item) return null;
 
   return (
-    <div className="w-[400px] h-[520px] overflow-hidden transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl m-5 transform hover:-translate-y-1 flex flex-col">
+    <div className="w-[300px] h-[520px] overflow-hidden transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl m-5 transform hover:-translate-y-1 flex flex-col">
       {/* Product Image with Fixed Height */}
       <div className="relative h-[240px] overflow-hidden group flex-shrink-0">
         <img

@@ -34,6 +34,7 @@ const Header = ({auth}) => {
        {user==null && <Link to="/home/register" className='hidden text-[20px] m-1 md:block'>Register</Link>}
 
         {user?.role === "admin" && <Link to="/admin" className='hidden text-[20px] m-1 md:block'>Admin Dashboard</Link>}
+        {user?.role=="customer"&&<Link to="/home/myprofile" className='hidden text-[20px] m-1 md:block'>My Profile</Link>}
 
         {user?.role==="customer" &&<Link to="/home/booking" className='hidden text-[20px] font-bold m-1 absolute right-24 md:block'>
           <FaShoppingCart />
