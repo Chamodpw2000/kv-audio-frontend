@@ -20,7 +20,8 @@ export default function mediaUpload(file) {
 
             const publicUrl = superbase.storage.from("images").getPublicUrl(fileName).data.publicUrl;
             resolve(publicUrl)
-        }).catch(() => {
+        }).catch((e) => {
+            console.log(e);
             reject("Upload Failed");
         })
 
