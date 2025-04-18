@@ -1,9 +1,11 @@
 import React from "react";
 
-const MyReviewCard = ({ review , setModelOpen}) => {
+const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) => {
 
   // Default values for null handlingo
-  console.log(review);
+  
+
+  
   
   const profilePicture = review?.profilePicture || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
   const name = review?.name || "Anonymous";
@@ -15,7 +17,7 @@ const MyReviewCard = ({ review , setModelOpen}) => {
   const itemName = review?.itemName || null;
 
   return (
-    <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-72 w-full ">
+    <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-[350px] w-full ">
       {/* Content Container with fixed height and scrollable content if needed */}
       <div className="flex flex-col h-full overflow-hidden">
         {/* Header with Profile Picture */}
@@ -78,7 +80,11 @@ const MyReviewCard = ({ review , setModelOpen}) => {
 
 
         <div>
-            <button onClick={()=>setModelOpen(true)} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary">
+            <button onClick={()=>{
+              setCurrentFeedback(review);
+              setRating(review.rating);
+              
+              setModelOpen(true)}} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary">
                 Edit Feedback
             </button>
         </div>
