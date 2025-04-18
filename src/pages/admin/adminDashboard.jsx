@@ -15,6 +15,9 @@ import axios from 'axios'
 import { IoMdPhotos } from "react-icons/io";
 import ManageGallary from '../../components/manageGallary'
 import AddGallaryItem from '../../components/addGallaryItem'
+import { VscFeedback } from "react-icons/vsc";
+import Feedbacks from './feedbacks'
+
 
 const AdminDashboard = () => {
 
@@ -75,6 +78,11 @@ const AdminDashboard = () => {
                         <FaRegUser className="w-[25px] h-[25px]" /> Users
                     </Link>
 
+                    <Link to="/admin/feedback" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
+                <VscFeedback 
+                        className="w-[25px] h-[25px]" /> Feedbacks
+                    </Link>
+
                     <Link to="/" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
                         <FaBackward className="w-[25px] h-[25px]" />Back
                     </Link>
@@ -108,6 +116,8 @@ const AdminDashboard = () => {
                         <Route path="/items/edit" element={<UpdateItem />} />
                         <Route path="/gallary" element={<ManageGallary />} />
                         <Route path="/addphoto" element={<AddGallaryItem/>} />
+                        <Route path="/feedback" element={<Feedbacks/>} />
+
 
 
 

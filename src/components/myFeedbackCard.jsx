@@ -1,13 +1,41 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) => {
 
   // Default values for null handlingo
   
+const [user, setUser] = useState(null);
 
+  useEffect(() => {
+
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUserPic/${review?.email}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        console.log("Data are", res.data);
+        setUser(res.data);
+      } catch (err) {
+
+        console.log("Error fetching user:", err);
+
+      }
+    };
+
+    fetchUser();
+
+
+  }, [])
   
   
-  const profilePicture = review?.profilePicture || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
+  const profilePicture = user || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
   const name = review?.name || "Anonymous";
   const email = review?.email || "No email provided";
   const rating = Number.isInteger(review?.rating) ? review.rating : 0;
@@ -15,6 +43,7 @@ const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) 
   const date = review?.date ? new Date(review.date).toLocaleDateString() : "Unknown date";
   const photos = Array.isArray(review?.photos) ? review.photos : [];
   const itemName = review?.itemName || null;
+  const status  = review?.isApproves === true ? "Approved" : "Pending";
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-[350px] w-full ">
@@ -55,6 +84,10 @@ const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) 
         {/* Comment with overflow handling */}
         <div className="flex-1 overflow-y-auto mb-2">
           <p className="text-gray-600 text-sm">{comment}</p>
+        </div>
+
+        <div className="flex-1 overflow-y-auto mb-2">
+          <p className="text-gray-600 text-sm">Status - {status}</p>
         </div>
 
         {/* Footer section: Date and Photos */}

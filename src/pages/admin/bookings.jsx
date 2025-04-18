@@ -51,7 +51,7 @@ const Orders = () => {
     return (
         <div className='mt-[100px]'>
           <h3 className="text-4xl font-bold text-center text-accent mb-5">
-            Your Orders
+            All Orders
           </h3>
 
 

@@ -130,13 +130,9 @@ const ProductOverview = () => {
                         </div>
                     </div>
                     <div className='md:p-[100px]'>
-                        {Array.isArray(feedbacks) && feedbacks.length > 0 ? (
                             <ProductFeedbackSlider feedbacks={feedbacks} itemKey={key}/>
-                        ) : (
-                            <div className="text-center py-8">
-                                <p>No reviews available for this product yet.</p>
-                            </div>
-                        )}
+                    
+                   
                     </div>
                 </div>
             }

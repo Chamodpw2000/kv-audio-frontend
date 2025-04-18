@@ -270,6 +270,7 @@ const Profile = () => {
                     {editMode ? (
                       <input
                         type="email"
+                        readOnly
                         name="email"
                         value={formData.email || ''}
                         onChange={handleInputChange}
@@ -308,10 +309,7 @@ const Profile = () => {
                     <p className="text-gray-800 font-semibold">{user.address}</p>
                   )}
                 </div>
-                <div>
-                  <label className="block text-gray-700 font-medium mb-2">Role</label>
-                  <p className="text-gray-800 font-semibold capitalize">{user.role}</p>
-                </div>
+             
                 {/* Only show in mobile view */}
                 <div className="md:hidden flex justify-center mt-6">
                   {!editMode ? (
