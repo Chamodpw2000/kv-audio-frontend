@@ -1,215 +1,3 @@
-// import React, { useState } from 'react'
-// import './additem.css'
-// import axios from 'axios'
-
-// const AddItem = () => {
-
-//   const [item, setItem] = useState({
-//     name: "",
-//     key: "",
-//     price: "",
-
-//     category: "",
-//     dimentions: "",
-//     description: "",
-//     image: "",
-//     availability: ""
-//   })
-
-
-//   const handleClick = async () => {
-//     const formData = new FormData();
-
-//     // Append all fields
-//     formData.append('name', item.name);
-//     formData.append('key', item.key);
-//     formData.append('price', item.price);
-//     formData.append('category', item.category);
-//     formData.append('dimentions', item.dimentions);
-//     formData.append('description', item.description);
-//     formData.append('availability', item.availability);
-
-//     // If you have actual file uploads
-//     // formData.append('image', selectedFile);
-
-//     // If you want to keep using static URLs
-//     formData.append('image', JSON.stringify(["https://picsum.photos/200/300", "https://picsum.photos/200/300"]));
-
-//     console.log("Form Data:", formData);
-
-
-//     try {
-//       const res = await axios.post(
-//         `${import.meta.env.VITE_BACKEND_URL}/api/products/addProduct`,
-//         formData,
-//         {
-//           headers: {
-//             "Authorization": "Bearer " + localStorage.getItem("token"),
-//             "Content-Type": "application/json",
-//           }
-//         }
-//       );
-//       console.log(res);
-//       setItem({
-//         name: "",
-//         key: "",
-//         price: "",
-//         category: "",
-//         dimentions: "",
-//         description: "",
-//         image: "",
-//         availability: ""
-//       })
-//     } catch (e) {
-//       console.error(e);
-//     }
-//   };
-
-
-//   return (
-
-//     <div className='min-h-screen w-full flex items-center justify-center bg-picture    '>
-//       <div className=' flex flex-col items-evenly justify-center w-[850px] h-[600px]  rounded-2xl backdrop-blur-xl  '>
-
-//         <p className='text-3xl font-bold text-center text-white '> Add a New Item</p>
-
-
-
-//         <div className='flex items-center justify-evenly p-5 '>
-
-
-//           <div className="flex flex-col">
-
-//             <div className='flex flex-col'>
-//               <p className='p-2 text-white font-bold'> Item Name</p>
-
-
-
-
-//               <input type="text" className='h-[50px] w-[350px]  rounded-2xl p-2 border-2 border-solid border-gray-950 ' placeholder='Item Name' value={item.name} onChange={
-//                 (e) => setItem({ ...item, name: e.target.value })
-//               } />
-//             </div>
-//             <div className='flex flex-col'>
-//               <p className='p-2  text-white font-bold'> Item Price</p>
-
-
-
-
-//               <input type="number" className='h-[50px] w-[350px]  rounded-2xl p-2 border-2 border-solid border-gray-950 ' placeholder='Item Price' value={item.price} onChange={
-//                 (e) => setItem({ ...item, price: parseFloat(e.target.value) })
-//               } />
-//             </div>
-
-//             <div className='flex flex-col'>
-//               <p className='p-2  text-white font-bold'> Item Key</p>
-
-
-
-
-//               <input type="text" className='h-[50px] w-[350px]  rounded-2xl p-2 border-2 border-solid border-gray-950 ' placeholder='Item Key' value={item.key} onChange={
-//                 (e) => setItem({ ...item, key: e.target.value })
-//               } />
-//             </div>
-
-
-//           </div>
-
-//           <div>
-
-//             <div className='flex flex-col'>
-//               <p className='p-2 text-white font-bold'>Item Category</p>
-//               <select
-//                 className='h-[50px] w-[350px] rounded-2xl p-2 border-2 border-solid border-gray-950'
-//                 value={item.category}
-//                 onChange={(e) => setItem({ ...item, category: e.target.value })}
-
-
-//               >
-//                 <option></option>
-
-//                 <option value="Audio">Audio</option>
-//                 <option value="Video">Video</option>
-//                 <option value="sounds">Sounds</option>
-
-//               </select>
-//             </div>
-
-//             <div className='flex flex-col'>
-//               <p className='p-2  text-white font-bold'> Item Dimentions</p>
-
-
-
-
-//               <input type="text" className='h-[50px] w-[350px]  rounded-2xl p-2 border-2 border-solid border-gray-950 ' placeholder='Dimensions' value={item.dimentions} onChange={
-//                 (e) => setItem({ ...item, dimentions: e.target.value })
-//               } />
-//             </div>
-//             <div className='flex flex-col'>
-//               <p className='p-2  text-white font-bold'> Item Availability</p>
-
-
-
-
-//               <select
-//   className='h-[50px] w-[350px] rounded-2xl p-2 border-2 border-solid border-gray-950'
-//   value={item.availability.toString()}
-//   onChange={(e) => setItem({ ...item, availability: e.target.value === 'true' })}
-// >
-// <option></option>
-
-//   <option value="true">Available</option>
-//   <option value="false">Not Available</option>
-// </select>
-
-//             </div>
-//           </div>
-
-
-
-//         </div>
-
-
-//         <div className='flex items-center justify-center  '>
-
-//           <div className='flex flex-col w-full px-14'>
-//             <p className='p-2  text-white font-bold'>Description</p>
-//             <textarea
-//               className='h-[100px] w-full rounded-2xl p-2 border-2 border-solid border-gray-950 resize-none'
-//               placeholder='Enter item description'
-//               value={item.description}
-//               onChange={(e) => setItem({ ...item, description: e.target.value })}
-//             />
-//           </div>
-
-
-
-//         </div>
-
-
-//         <div className='flex items-center justify-center '>
-//           <button className='w-[200px] h-[50px] bg-[#f0ad38] text-white text-xl my-5 rounded-lg hover:bg-[#ffb12bee]' onClick={handleClick}>Add Item</button>
-//         </div>
-
-
-
-
-
-
-
-
-
-//       </div>
-
-//     </div>
-//   )
-// }
-
-// export default AddItem
-
-
-
-
 import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -222,29 +10,18 @@ const AddItem = () => {
   const [productKey, setProductKey] = useState('');
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
-  const [productCategory, setProductCategory] = useState('audio');
+  const [productCategory, setProductCategory] = useState('sounds');
   const [productDimensions, setProductDimensions] = useState('');
   const [productDescription, setProductDescription] = useState('');
-  const [loading, setLoading] = useState(false); // Track API call state
+  const [loading, setLoading] = useState(false);
   const [productImages, setProductImages] = useState([]);
 
   const handleAddItem = async () => {
-
-    console.log(productImages);
-
     const promises = [];
-    for(let i = 0 ; i<productImages.length; i++){
-      console.log(productImages[i]);
-      const promise = mediaUpload(productImages[i]);
-      promises.push(promise);
+    for (let i = 0; i < productImages.length; i++) {
+      promises.push(mediaUpload(productImages[i]));
     }
 
-
-
-  
-
-    
-    // Basic validation
     if (!productKey || !productName || !productPrice || !productCategory || !productDescription) {
       toast.error('Please fill in all required fields.');
       return;
@@ -257,25 +34,9 @@ const AddItem = () => {
     }
 
     try {
-
-      // Promise.all(promises).then((result)=>{
-      //   console.log(result);
-        
-      // })
-      // .catch((err)=>{
-      //   toast.error( err);
-      //   console.log(err);
-        
-      // }
-      // )
-
-
-
-
-      setLoading(true); // Disable button during API call
-
-
-      const imageurls =  await  Promise.all(promises);
+      setLoading(true);
+      const imageurls = await Promise.all(promises);
+console.log("category", productCategory);
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/addProduct`,
@@ -296,111 +57,121 @@ const AddItem = () => {
       );
 
       toast.success(result.data.message);
-      // Reset form fields
       setProductKey('');
       setProductName('');
       setProductPrice('');
-      setProductCategory('audio'); // Reset to default
+      setProductCategory('sounds');
       setProductDimensions('');
       setProductDescription('');
-
+      setProductImages([]);
 
       navigate('/admin/items');
     } catch (error) {
       console.error(error);
       toast.error('Error adding product. Please try again.');
     } finally {
-      setLoading(false); // Re-enable button
+      setLoading(false);
     }
-   };
+  };
 
   return (
-    <div className='w-full h-full flex flex-col items-center justify-center'>
-      <h1 className="text-2xl font-semibold mb-4">Add Item</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-200 p-6">
+      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-8">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Add New Product</h1>
 
-      <div className='w-[400px] border p-4 flex flex-col items-center rounded-lg shadow-md'>
-        {/* Product Key */}
-        <label className="w-full">Product Key</label>
-        <input
-          className="w-full p-2 border rounded-md mb-2"
-          onChange={(e) => setProductKey(e.target.value)}
-          value={productKey}
-          type="text"
-          placeholder='Enter Product Key'
-        />
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Product Key</label>
+            <input
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              onChange={(e) => setProductKey(e.target.value)}
+              value={productKey}
+              type="text"
+              placeholder="Enter Product Key"
+            />
+          </div>
 
-        {/* Product Name */}
-        <label className="w-full">Product Name</label>
-        <input
-          className="w-full p-2 border rounded-md mb-2"
-          onChange={(e) => setProductName(e.target.value)}
-          value={productName}
-          type="text"
-          placeholder='Enter Product Name'
-        />
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Product Name</label>
+            <input
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              onChange={(e) => setProductName(e.target.value)}
+              value={productName}
+              type="text"
+              placeholder="Enter Product Name"
+            />
+          </div>
 
-        {/* Product Price */}
-        <label className="w-full">Product Price</label>
-        <input
-          className="w-full p-2 border rounded-md mb-2"
-          type="number"
-          placeholder='Enter Product Price'
-          onChange={(e) => setProductPrice(e.target.value)}
-          value={productPrice}
-        />
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Product Price</label>
+            <input
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              type="number"
+              placeholder="Enter Product Price"
+              onChange={(e) => setProductPrice(e.target.value)}
+              value={productPrice}
+            />
+          </div>
 
-        {/* Product Category */}
-        <label className="w-full">Product Category</label>
-        <select
-          className="w-full p-2 border rounded-md mb-2"
-          onChange={(e) => setProductCategory(e.target.value)}
-          value={productCategory}
-        >
-          <option value="audio">Audio</option>
-          <option value="lights">Lights</option>
-        </select>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Category</label>
+            <select
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              onChange={(e) => setProductCategory(e.target.value)}
+              value={productCategory}
+            >
+              <option value="sounds">Sounds</option>
+              <option value="lighting">Lighting</option>
+              <option value="furniture">Furniture</option>
+              <option value="decorations">Decorations</option>
+            </select>
+          </div>
 
-        {/* Product Dimensions */}
-        <label className="w-full">Product Dimensions (optional)</label>
-        <input
-          className="w-full p-2 border rounded-md mb-2"
-          type="text"
-          placeholder='Enter Product Dimensions'
-          onChange={(e) => setProductDimensions(e.target.value)}
-          value={productDimensions}
-        />
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Dimensions (optional)</label>
+            <input
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              type="text"
+              placeholder="Enter Product Dimensions"
+              onChange={(e) => setProductDimensions(e.target.value)}
+              value={productDimensions}
+            />
+          </div>
 
-        {/* Product Description */}
-        <label className="w-full">Product Description</label>
-        <input
-          className="w-full p-2 border rounded-md mb-4"
-          type="text"
-          placeholder='Enter Product Description'
-          onChange={(e) => setProductDescription(e.target.value)}
-          value={productDescription}
-        />
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Description</label>
+            <textarea
+              className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="Enter Product Description"
+              onChange={(e) => setProductDescription(e.target.value)}
+              value={productDescription}
+              rows={3}
+            />
+          </div>
 
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">Upload Images</label>
+            <input
+              className="w-full p-3 border rounded-xl file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+              type="file"
+              multiple
+              onChange={(e) => setProductImages(e.target.files)}
+            />
+          </div>
+        </div>
 
-        <input
-          type="file"
-          multiple
-          onChange={(e) => setProductImages(e.target.files)}
-        />
-
-        {/* Buttons */}
-        <div className="flex w-full justify-between">
+        <div className="flex justify-between mt-8">
           <button
             onClick={handleAddItem}
-            className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition ${
-              loading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`px-6 py-3 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition font-semibold ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={loading}
           >
-            {loading ? 'Adding...' : 'Add'}
+            {loading ? 'Adding...' : 'Add Item'}
           </button>
+
           <button
             onClick={() => navigate('/admin/items')}
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"
+            className="px-6 py-3 bg-gray-400 text-white rounded-xl shadow-md hover:bg-gray-500 transition font-semibold"
           >
             Cancel
           </button>
