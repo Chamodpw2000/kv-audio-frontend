@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaUser, FaEdit, FaSave, FaTimes, FaCamera, FaSpinner } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import mediaUpload from '../../utils/mediaUpload';
+import MyFeedbackSlider from '../../components/myFeedbackSwiper';
 
 const Profile = () => {
   const token = localStorage.getItem('token');
@@ -174,8 +175,13 @@ const Profile = () => {
 
   return (
     <div className="mt-[100px] px-4 py-8 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold text-[#3674b5] mb-8">My Profile</h1>
-      {user && (
+      <h3 className="text-4xl font-bold text-center  text-accent mb-5">
+            Manage your Profile !
+          </h3>
+      {user && 
+      
+      
+      (<div>
         <div className="bg-white rounded-lg shadow-lg p-6">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Left Column - Profile Image */}
@@ -320,7 +326,17 @@ const Profile = () => {
               </form>
             </div>
           </div>
+
+</div>
+          <div>
+          <h3 className="text-4xl font-bold text-center  text-accent my-5">
+            Feedbacks Given By You 
+          </h3>
+            <MyFeedbackSlider/>
+          </div>
         </div>
+
+        
       )}
     </div>
   );
