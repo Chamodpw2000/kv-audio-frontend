@@ -11,7 +11,7 @@ import mediaUpload from '../utils/mediaUpload';
 import toast from 'react-hot-toast';
 import MyReviewCard from './myFeedbackCard';
 
-const StarRating = ({ rating, setRating }) => {
+const StarRating = ({ rating, setRating , setCurrentFeedback}) => {
   const stars = [1, 2, 3, 4, 5];
 
   return (
@@ -20,7 +20,11 @@ const StarRating = ({ rating, setRating }) => {
         <button
           key={star}
           type="button"
-          onClick={() => setRating(star)}
+          onClick={() => {setRating(star)
+            console.log("Star clicked", star);
+            setCurrentFeedback((prev) => ({ ...prev, rating: star }));
+            
+          }}
           className="focus:outline-none"
         >
           <svg
@@ -41,44 +45,52 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 const MyFeedbackSlider = () => {
-  const [feedbacks, setFeedbacks] = useState([]);  // Initialize with empty array instead of undefined
+  const [feedbacks, setFeedbacks] = useState([]);
   const [modelOpen, setModelOpen] = useState(false);
-  const [itemId, setItemId] = useState('');
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+
   const [productImages, setProductImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-const user = JSON.parse(localStorage.getItem('user'));
+  const [currentFeedback, setCurrentFeedback] = useState({});
+  const [rating, setRating] = useState(0);
+
+  const [edited, setEdited] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem('user'));
+
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
         const token = localStorage.getItem('token');
-     
-
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/get-my-reviews`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log("Data are", res.data);
         setFeedbacks(res.data);
       } catch (err) {
         console.error("Error fetching reviews:", err.response ? err.response.data : err.message);
-        setFeedbacks([]);  // Set to empty array on error
+        setFeedbacks([]);
       }
     };
 
     fetchFeedbacks();
-  }, []);
+  }, [edited]);
+
+  useEffect(() => {
+    if (modelOpen && currentFeedback?.rating) {
+      setRating(currentFeedback.rating);
+    }
+  }, [modelOpen, currentFeedback]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "id") setItemId(value);
-    else if (name === "comment") setComment(value);
+    setCurrentFeedback((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddItem = async () => {
-    if (!rating || !comment) {
+
+    
+    
+    if (!rating || !currentFeedback.comment) {
       toast.error('Please fill in all required fields.');
       return;
     }
@@ -91,26 +103,43 @@ const user = JSON.parse(localStorage.getItem('user'));
 
     setLoading(true);
     try {
-      const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/reviews`,
-        { itemId, rating, comment, photos: imageUrls },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      if (!currentFeedback._id) {
+        toast.error('No feedback selected for editing.');
+        return;
+      }
 
-      toast.success("Review added successfully");
-      setItemId('');
+      // Upload images if needed:
+      if(productImages.length > 0
+      ) {
+        console.log("Uploading images", productImages);
+        
+        
+      const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
+      console.log("Image URLs", imageUrls);
+      
+      currentFeedback.photos = imageUrls;
+    }
+
+    
       setRating(0);
-      setComment('');
+   
       setProductImages([]);
-      setModelOpen(false);
-     
-      // Refresh feedbacks after adding a new one
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`);
-      setFeedbacks(res.data);
+      currentFeedback.isApproves= false;
+      console.log("Current Feedback", currentFeedback);
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/update/${currentFeedback._id}`, currentFeedback,{
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      toast.success("Review updated successfully");
+      setEdited(!edited);
+
+setModelOpen(false);
     } catch (error) {
+
+
+
       console.error(error);
-      toast.error('Error adding review. Please try again.');
+      toast.error('Error updating review. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -118,18 +147,27 @@ const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>
+      {/* Mobile View */}
       <div className="py-4 mx-4 md:hidden">
         <Swiper
           spaceBetween={25}
           slidesPerView={1}
-          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          loop={feedbacks.length > 1}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
         >
-          {feedbacks && feedbacks.length > 0 ? (
+          {feedbacks.length > 0 ? (
             feedbacks.map((feedback, index) => (
               <SwiperSlide key={index} className="flex justify-center items-center">
-                <MyReviewCard review={feedback} setModelOpen={()=>{setModelOpen(true)}} />
+                <MyReviewCard
+                  review={feedback}
+                  setModelOpen={() => {
+                    setCurrentFeedback(feedback);
+                    setModelOpen(true);
+                  }}
+                  setCurrentFeedback={setCurrentFeedback}
+                  setRating={setRating}
+                />
               </SwiperSlide>
             ))
           ) : (
@@ -139,27 +177,37 @@ const user = JSON.parse(localStorage.getItem('user'));
           )}
         </Swiper>
 
-       {user?.role=="customer" &&  <button
-          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
-          onClick={() => setModelOpen(true)}
-        >
-          Add a Review
-        </button>}
+        {user?.role === "customer" && (
+          <button
+            className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+            onClick={() => setModelOpen(true)}
+          >
+            Add a Review
+          </button>
+        )}
       </div>
 
-
+      {/* Desktop View */}
       <div className="py-4 mx-4 hidden md:block">
         <Swiper
           spaceBetween={25}
           slidesPerView={3}
-          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          loop={feedbacks.length > 1}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
         >
-          {feedbacks && feedbacks.length > 0 ? (
+          {feedbacks.length > 0 ? (
             feedbacks.map((feedback, index) => (
               <SwiperSlide key={index} className="flex justify-center items-center">
-                <MyReviewCard review={feedback} setModelOpen={()=>{setModelOpen(true)}} />
+                <MyReviewCard
+                  review={feedback}
+                  setModelOpen={() => {
+                    setCurrentFeedback(feedback);
+                    setModelOpen(true);
+                  }}
+                  setCurrentFeedback={setCurrentFeedback}
+                  setRating={setRating}
+                />
               </SwiperSlide>
             ))
           ) : (
@@ -168,24 +216,23 @@ const user = JSON.parse(localStorage.getItem('user'));
             </SwiperSlide>
           )}
         </Swiper>
-
-    
       </div>
 
+      {/* Edit Modal */}
       {modelOpen && (
         <div className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-5 flex-col">
           <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
-            <h1 className='text-2xl font-bold text-center text-accent'>Add a Review</h1>
+            <h1 className='text-2xl font-bold text-center text-accent'>Edit the Review</h1>
             <label className='my-2'>Item Id (Optional)
-              <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={itemId} name="id" onChange={handleChange} />
+              <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={currentFeedback.itemId} name="id" onChange={handleChange} readOnly />
             </label>
             <label className='my-2'>Rating
               <div className="mt-2">
-                <StarRating rating={rating} setRating={setRating} />
+                <StarRating rating={rating} setRating={setRating} setCurrentFeedback={setCurrentFeedback} />
               </div>
             </label>
             <label className='my-2'>Comment
-              <textarea className='w-full rounded-xl h-[80px] border-2 border-secondary p-2' value={comment} name="comment" onChange={handleChange} />
+              <textarea className='w-full rounded-xl h-[80px] border-2 border-secondary p-2' value={currentFeedback.comment} name="comment" onChange={handleChange} />
             </label>
             <label className='my-2'>Add Photos
               <input type="file" multiple onChange={(e) => setProductImages(e.target.files)} />
@@ -196,7 +243,7 @@ const user = JSON.parse(localStorage.getItem('user'));
                 onClick={handleAddItem}
                 disabled={loading}
               >
-                {loading ? 'Adding...' : 'Add Review'}
+                {loading ? 'Editing...' : 'Edit Feedback'}
               </button>
               <button
                 className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"

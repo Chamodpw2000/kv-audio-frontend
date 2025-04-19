@@ -1,11 +1,41 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const MyReviewCard = ({ review , setModelOpen}) => {
+
+const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) => {
 
   // Default values for null handlingo
-  console.log(review);
   
-  const profilePicture = review?.profilePicture || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
+const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUserPic/${review?.email}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        console.log("Data are", res.data);
+        setUser(res.data);
+      } catch (err) {
+
+        console.log("Error fetching user:", err);
+
+      }
+    };
+
+    fetchUser();
+
+
+  }, [])
+  
+  
+  const profilePicture = user || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
   const name = review?.name || "Anonymous";
   const email = review?.email || "No email provided";
   const rating = Number.isInteger(review?.rating) ? review.rating : 0;
@@ -13,9 +43,10 @@ const MyReviewCard = ({ review , setModelOpen}) => {
   const date = review?.date ? new Date(review.date).toLocaleDateString() : "Unknown date";
   const photos = Array.isArray(review?.photos) ? review.photos : [];
   const itemName = review?.itemName || null;
+  const status  = review?.isApproves === true ? "Approved" : "Pending";
 
   return (
-    <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-72 w-full ">
+    <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-[350px] w-full ">
       {/* Content Container with fixed height and scrollable content if needed */}
       <div className="flex flex-col h-full overflow-hidden">
         {/* Header with Profile Picture */}
@@ -55,6 +86,10 @@ const MyReviewCard = ({ review , setModelOpen}) => {
           <p className="text-gray-600 text-sm">{comment}</p>
         </div>
 
+        <div className="flex-1 overflow-y-auto mb-2">
+          <p className="text-gray-600 text-sm">Status - {status}</p>
+        </div>
+
         {/* Footer section: Date and Photos */}
         <div className="mt-auto">
           {/* Date */}
@@ -78,7 +113,11 @@ const MyReviewCard = ({ review , setModelOpen}) => {
 
 
         <div>
-            <button onClick={()=>setModelOpen(true)} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary">
+            <button onClick={()=>{
+              setCurrentFeedback(review);
+              setRating(review.rating);
+              
+              setModelOpen(true)}} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary">
                 Edit Feedback
             </button>
         </div>

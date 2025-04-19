@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
+import axios from "axios";
 const ReviewCard = ({ review }) => {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUserPic/${review?.email}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        console.log("Data are", res.data);
+        setUser(res.data);
+      } catch (err) {
+
+        console.log("Error fetching user:", err);
+
+      }
+    };
+
+    fetchUser();
+
+
+  }, [])
   // Default values for null handling
-  const profilePicture = review?.profilePicture || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
+  const profilePicture =user || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
   const name = review?.name || "Anonymous";
   const email = review?.email || "No email provided";
   const rating = Number.isInteger(review?.rating) ? review.rating : 0;
@@ -22,7 +51,7 @@ const ReviewCard = ({ review }) => {
             alt={name}
             className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 flex-shrink-0"
           />
-          
+
           <div className="flex-1 min-w-0">
             {/* Name & Email */}
             <h3 className="text-lg font-semibold truncate">{name}</h3>
