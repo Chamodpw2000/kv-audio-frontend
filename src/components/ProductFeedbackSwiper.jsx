@@ -178,7 +178,7 @@ const ProductFeedbackSlider = ({feedbacks,itemKey}) => {
         <div className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-5 flex-col">
           <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
             <h1 className='text-2xl font-bold text-center text-accent'>Add a Review</h1>
-            <label className='my-2'>Item Id (Optional)
+            <label className='my-2 mx-0'>Item Id (Optional)
               <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2 ' value={itemKey} name="id" onChange={handleChange} readOnly />
             </label>
             <label className='my-2'>Rating
