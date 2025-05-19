@@ -121,7 +121,7 @@ const user = JSON.parse(localStorage.getItem('user'));
         <Swiper
           spaceBetween={25}
           slidesPerView={1}
-          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
         >
