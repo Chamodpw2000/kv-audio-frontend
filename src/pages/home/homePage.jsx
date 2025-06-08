@@ -8,6 +8,7 @@ import Items from './items'
 import NotFound from './notFound'
 import ProductOverview from './productOverview'
 import Profile from './profile'
+import ProfilePage from './profilePage'
 
 const HomePage = ({ auth, setAuth }) => {
 
@@ -17,7 +18,7 @@ const HomePage = ({ auth, setAuth }) => {
 
             <div className="h-full w-full ">
          
- <div className=' flex items-center justify-center mx-auto'> 
+ <div className=' container mx-auto'> 
               
                 <Routes>
 

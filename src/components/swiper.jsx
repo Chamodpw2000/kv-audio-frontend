@@ -142,6 +142,7 @@ const Slider = () => {
                                     {
 
                                         <ProductCard item={product} />
+                               
                                     }
                                 </SwiperSlide>
                             ))}

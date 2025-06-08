@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ProductCard from '../../components/productCard'
+import LoadingProductCard from '../../components/loadingProductsCard'
 
 const Items = () => {
   const [state, setState] = useState("loading") // loading, success, error
@@ -8,6 +9,7 @@ const Items = () => {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+  const loadingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11 , 12] // Placeholder for loading state items
 
   // Define categories
   const categories = ["all", "sounds", "lighting", "furniture", "decorations"]
@@ -104,11 +106,31 @@ const Items = () => {
       </div>
 
       {/* Products Display */}
-      <div className='w-full h-full flex flex-wrap p-5 justify-center items-center '>
+      <div className='w-full h-full flex flex-wrap  justify-center items-center  '>
         {/* Loading State */}
         {state === "loading" && (
-          <div className='w-full h-full flex items-center justify-center py-20'>
-            <div className='w-[50px] h-[50px] border-4 border-t-4 border-t-blue-600 rounded-full animate-spin'></div>
+          <div className='w-full h-full flex items-center justify-center '>
+            <div className='w-full' >
+
+
+
+
+              <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  '>
+
+
+
+                {loadingItems.map((item) => (
+                  <LoadingProductCard key={item} />
+                ))
+
+                }
+              </div>
+
+
+
+
+
+            </div>
           </div>
         )}
 

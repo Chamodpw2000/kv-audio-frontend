@@ -109,7 +109,7 @@ const AddGallaryItem = () => {
         return;
       }
 
-      console.log("data is", data);
+
 
 
 

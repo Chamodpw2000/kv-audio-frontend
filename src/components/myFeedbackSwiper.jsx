@@ -10,9 +10,11 @@ import axios from 'axios';
 import mediaUpload from '../utils/mediaUpload';
 import toast from 'react-hot-toast';
 import MyReviewCard from './myFeedbackCard';
+import LoadingFeedBackCard from './loadingFeedBackCard';
 
 const StarRating = ({ rating, setRating , setCurrentFeedback}) => {
   const stars = [1, 2, 3, 4, 5];
+
 
   return (
     <div className="flex items-center space-x-1">
@@ -49,16 +51,45 @@ const MyFeedbackSlider = () => {
   const [modelOpen, setModelOpen] = useState(false);
 
   const [productImages, setProductImages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentFeedback, setCurrentFeedback] = useState({});
   const [rating, setRating] = useState(0);
 
   const [edited, setEdited] = useState(false);
-
+  const loadingArray = [1, 2, 3, 4, 5,6,7,8,9];
   const user = JSON.parse(localStorage.getItem('user'));
+
+
+  const deleteFeedback = async (id) => {
+    console.log(id);
+    
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please login to delete a review.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log("Deleting feedback with ID:", id);
+      
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success("Review deleted successfully");
+      setEdited(!edited);
+      setModelOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting review. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchFeedbacks = async () => {
+    setLoading(true);
       try {
         const token = localStorage.getItem('token');
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/get-my-reviews`, {
@@ -66,6 +97,7 @@ const MyFeedbackSlider = () => {
         });
 
         setFeedbacks(res.data);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching reviews:", err.response ? err.response.data : err.message);
         setFeedbacks([]);
@@ -148,7 +180,8 @@ setModelOpen(false);
   return (
     <div>
       {/* Mobile View */}
-      <div className="py-4 mx-4 md:hidden">
+      <div className="md:hidden">
+        {!loading &&
         <Swiper
           spaceBetween={25}
           slidesPerView={1}
@@ -175,11 +208,32 @@ setModelOpen(false);
               <p className="text-center text-gray-500">No feedback available</p>
             </SwiperSlide>
           )}
-        </Swiper>
+        </Swiper>}
+
+
+         {loading &&
+        <Swiper
+          spaceBetween={25}
+          slidesPerView={3}
+      
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+          {
+            loadingArray.map(( index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+                
+              <LoadingFeedBackCard/>
+              </SwiperSlide>
+            ))
+     
+            
+          }
+        </Swiper>}
 
         {user?.role === "customer" && (
           <button
-            className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+            className="block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
             onClick={() => setModelOpen(true)}
           >
             Add a Review
@@ -188,7 +242,10 @@ setModelOpen(false);
       </div>
 
       {/* Desktop View */}
-      <div className="py-4 mx-4 hidden md:block">
+
+      <div className=" hidden md:block">
+
+        {!loading &&
         <Swiper
           spaceBetween={25}
           slidesPerView={3}
@@ -215,13 +272,34 @@ setModelOpen(false);
               <p className="text-center text-gray-500">No feedback available</p>
             </SwiperSlide>
           )}
-        </Swiper>
+        </Swiper>}
+
+
+         {loading &&
+        <Swiper
+          spaceBetween={25}
+          slidesPerView={3}
+          loop={feedbacks.length > 1}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+          {
+            loadingArray.map((index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+                
+              <LoadingFeedBackCard/>
+              </SwiperSlide>
+            ))
+     
+            
+          }
+        </Swiper>}
       </div>
 
       {/* Edit Modal */}
       {modelOpen && (
-        <div className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-5 flex-col">
-          <div className='flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
+        <div className="fixed inset-0  z-10 bg-black bg-opacity-50 flex justify-center items-center p-[5%] pt-[60px] md:pt-[0px] md:px-[20%] flex-col">
+          <div className=' flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
             <h1 className='text-2xl font-bold text-center text-accent'>Edit the Review</h1>
             <label className='my-2'>Item Id (Optional)
               <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={currentFeedback.itemId} name="id" onChange={handleChange} readOnly />
@@ -239,17 +317,25 @@ setModelOpen(false);
             </label>
             <div className='flex justify-center items-center w-full gap-4 py-2'>
               <button
-                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
+                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors border-2"
                 onClick={handleAddItem}
                 disabled={loading}
               >
                 {loading ? 'Editing...' : 'Edit Feedback'}
               </button>
               <button
-                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-secondary hover:border-secondary transition-colors"
+                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-red-600 hover:border-red-600 transition-colors border-2"
                 onClick={() => setModelOpen(false)}
               >
                 Cancel
+              </button>
+
+
+                            <button
+                className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-red-600 hover:border-red-600 transition-colors border-2"
+                onClick={() => deleteFeedback(currentFeedback._id)}
+              >
+               Delete Feedback
               </button>
             </div>
           </div>

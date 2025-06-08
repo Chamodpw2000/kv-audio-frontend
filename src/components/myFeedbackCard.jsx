@@ -57,7 +57,7 @@ const [user, setUser] = useState(null);
             className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 flex-shrink-0"
           />
           
-          <div className="flex-1 min-w-0">
+          <div className="flex-1">
             {/* Name & Email */}
             <h3 className="text-lg font-semibold truncate">{name}</h3>
             <p className="text-xs text-gray-500 truncate">{email}</p>
@@ -117,7 +117,7 @@ const [user, setUser] = useState(null);
               setCurrentFeedback(review);
               setRating(review.rating);
               
-              setModelOpen(true)}} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary">
+              setModelOpen(true)}} className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary border-2">
                 Edit Feedback
             </button>
         </div>
