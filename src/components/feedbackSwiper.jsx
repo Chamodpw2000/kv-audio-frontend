@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import 'swiper/css';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
-import axios from 'axios';
-import ReviewCard from './reviewCard';
+import 'swiper/css/pagination';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import mediaUpload from '../utils/mediaUpload';
-import toast from 'react-hot-toast';
+import ReviewCard from './reviewCard';
 
 import LoadingFeedBackCard from './loadingFeedBackCard';
 

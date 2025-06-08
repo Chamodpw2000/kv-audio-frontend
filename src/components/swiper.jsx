@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Skeleton from 'react-loading-skeleton';  
+
+import axios from 'axios';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
-import axios from 'axios';
+import 'swiper/css/pagination';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import ProductCard from './productCard';
-
-
-import { Link } from 'react-router-dom';
 import LoadingProductCard from './LoadingProductCard';
-const item = {
-    name: "Bluetooth Speaker",
-    key: "12345",
-    category: "Electronics",
-    dimensions: "10x5x5 cm",
-    description: "High-quality Bluetooth speaker with deep bass and clear sound.",
 
-    price: 15000,
-    availability: true,
-    image: ["https://cdn.dotpe.in/longtail/store-items/6983279/HawDsdnx.webp"]
-};
+
+
+
 
 const Slider = () => {
 
