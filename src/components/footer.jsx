@@ -57,14 +57,12 @@ const Footer = () => {
                         <div className="w-full sm:w-1/2 md:w-1/4 mb-6">
                             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
                             <ul>
+                        
                                 <li>
-                                    <a href="/about-us" className="hover:text-secondary">About Us</a>
+                                    <a href="/home/items" className="hover:text-secondary">Products</a>
                                 </li>
                                 <li>
-                                    <a href="/services" className="hover:text-secondary">Services</a>
-                                </li>
-                                <li>
-                                    <a href="/contact" className="hover:text-secondary">Contact</a>
+                                    <a href="/home/gallery" className="hover:text-secondary">Gallery</a>
                                 </li>
                             </ul>
                         </div>

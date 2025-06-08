@@ -1,34 +1,28 @@
-import React, { useState } from 'react'
-import Header from '../../components/header'
 import { Route, Routes } from 'react-router-dom'
-import Contact from './contact'
-import Items from './items'
-import Gallery from './gallery'
-import NotFound from './notFound'
-import LoginPage from '../../login/login'
-import ProductOverview from './productOverview'
-import BookingsPage from './bookingPage'
-import Orders from '../admin/bookings'
-import Home from './home'
-import Footer from '../../components/footer'
 import RegisterPage from '../../assets/register/RegisterPage'
+import LoginPage from '../../login/login'
+import Orders from '../admin/bookings'
+import BookingsPage from './bookingPage'
+import Gallery from './gallery'
+import Items from './items'
+import NotFound from './notFound'
+import ProductOverview from './productOverview'
 import Profile from './profile'
 
-const HomePage = () => {
+const HomePage = ({ auth, setAuth }) => {
 
-    const [auth, setAuth] = useState(false)
     return (
         <>
-            <Header auth={auth}/>
-
-        
           
 
-            <div className="h-full w-full bg-primary">
+            <div className="h-full w-full ">
+         
+ <div className=' flex items-center justify-center mx-auto'> 
+              
                 <Routes>
 
-                    <Route path="/" element={< Home/>} />
-
+           
+      
                     <Route path="items" element={<Items />} />
                     <Route path="gallery" element={<Gallery />} />
                     <Route path="login" element={<LoginPage setAuth={setAuth} auth={auth} />} />
@@ -36,15 +30,16 @@ const HomePage = () => {
                     <Route path="product/:id" element={<ProductOverview/>} />
                     <Route path="booking" element={<BookingsPage />} />
                     <Route path="mybookings" element={<Orders />} />
-                    <Route path="register" element={<RegisterPage setAuth={setAuth} auth={auth} />} />
+                    <Route path="register" element={<RegisterPage  />} />
                     <Route path="myprofile" element={<Profile />} />
 
-
+    
 
                 </Routes>
-            </div>
+                  </div>
+      </div>
 
-            <Footer />
+        
         </>
     )
 }

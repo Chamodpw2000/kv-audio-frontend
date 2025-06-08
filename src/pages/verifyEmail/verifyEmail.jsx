@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import React from 'react';
 import toast from "react-hot-toast";
 
-const VerifyEmail = () => {
+const VerifyEmail = ({ setAuth , auth }) => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,8 @@ const VerifyEmail = () => {
     }).then((res) => {
       console.log(res);
       toast.success("Email verified successfully!");
-      navigate('/home');
+      setAuth(!auth);
+      navigate('/');
     }).catch((e) => {
       console.log(e);
       toast.error(e.response?.data?.message || "Failed to verify email. Please try again.");
@@ -44,7 +45,7 @@ const VerifyEmail = () => {
       }
     }).then((res) => {
       console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data));
+  
       toast.success("OTP resent successfully!");
     }).catch((e) => {
       console.log(e);
@@ -62,7 +63,7 @@ const VerifyEmail = () => {
       }
     }).then((res) => {
       console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data));
+
       toast.success("Verification code sent to your email");
     }).catch((e) => {
       console.log(e);
@@ -74,6 +75,8 @@ const VerifyEmail = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen flex justify-center items-center p-4">
+
+ 
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-200">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-accent mb-2">Verify Your Email</h1>

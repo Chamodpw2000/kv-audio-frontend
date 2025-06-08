@@ -26,6 +26,7 @@ const LoginPage = ({ auth, setAuth }) => {
                     toast.success("Login Success")
                     const user = responce.data.user
                     localStorage.setItem("token", responce.data.token)
+                    localStorage.setItem("user", JSON.stringify(user))
 
 
 
@@ -35,7 +36,7 @@ const LoginPage = ({ auth, setAuth }) => {
                         navigate('/admin')
                     }
                     if (user?.role === "customer") {
-                        navigate('/home')
+                        navigate('/')
                     }
 
 
@@ -66,6 +67,7 @@ const LoginPage = ({ auth, setAuth }) => {
             console.log(res),
             toast.success("Login Success")
             const user = res.data.user
+            console.log("user is",user);
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", JSON.stringify(user))
             if (user.emailVerified == false) {
@@ -78,7 +80,7 @@ const LoginPage = ({ auth, setAuth }) => {
             }
             if (user?.role === "customer") {
                 setAuth(!auth);
-                navigate('/home');
+                navigate('/');
             }
 
         }
@@ -115,6 +117,10 @@ const LoginPage = ({ auth, setAuth }) => {
 
                     <Link to="/home/register" className='hover:text-accent font-bold text-white '>
                        Register here !</Link>
+
+
+                       user@mail.com - 123456<br/>
+                       admin@mail.com - 123456
 
                 </div>
 

@@ -5,7 +5,7 @@ const LoadingFeedBackCard = () => {
   return (
     <div>
 
-<div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-72 w-full ">
+<div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200 flex flex-col h-72 w-full  ">
       {/* Content Container with fixed height and scrollable content if needed */}
       <div className="flex flex-col h-full overflow-hidden">
         {/* Header with Profile Picture */}

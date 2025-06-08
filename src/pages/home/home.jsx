@@ -11,6 +11,8 @@ const Home = () => {
     <div className='min-h-screen flex flex-col   pt-[70px] '>
 
 
+
+
       <div className="min-h-screen bg-gradient-to-b from-accent to-white pt-10 px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:space-x-8 items-center rounded-3xl overflow-hidden ">
