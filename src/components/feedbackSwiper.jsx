@@ -191,7 +191,7 @@ const user = JSON.parse(localStorage.getItem('user'));
         </Swiper>}
 
        {user?.role=="customer" &&  <button
-          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary hover:border-2 "
           onClick={() => setModelOpen(true)}
         >
           Add a Review
@@ -237,7 +237,7 @@ const user = JSON.parse(localStorage.getItem('user'));
         </Swiper>}
 
        {user?.role=="customer" &&  <button
-          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
+          className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary border-2 "
           onClick={() => setModelOpen(true)}
         >
           Add a Review

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 import MobileNavPannel from './mobileNavPannel';
+import toast from 'react-hot-toast';
 
-const Header = ({auth}) => {
+const Header = ({auth, setAuth}) => {
 
-  const props = useParams(auth)
-
- 
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   useEffect(() => {
+
+    
 
     setUser(JSON.parse(localStorage.getItem('user')));
   }, [auth]);
@@ -42,7 +43,9 @@ const Header = ({auth}) => {
         {token != null && <button className='hidden md:block absolute right-5 text-[20px]' onClick={() => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
-          window.location.href = '/';
+          setAuth(!auth);
+          toast.success("Logged out successfully");
+          navigate('/')
         }}>Logout</button>}
       </div>
     </header>

@@ -8,7 +8,7 @@ const Items = () => {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
-  
+
   // Define categories
   const categories = ["all", "sounds", "lighting", "furniture", "decorations"]
 
@@ -34,24 +34,24 @@ const Items = () => {
   useEffect(() => {
     if (products.length > 0) {
       let result = [...products]
-      
+
       // Filter by category if not "all"
       if (activeCategory !== "all") {
-        result = result.filter(item => 
+        result = result.filter(item =>
           item.category.toLowerCase() === activeCategory.toLowerCase()
         )
       }
-      
+
       // Filter by search query
       if (searchQuery.trim() !== "") {
         const query = searchQuery.toLowerCase()
-        result = result.filter(item => 
-          item.name.toLowerCase().includes(query) || 
+        result = result.filter(item =>
+          item.name.toLowerCase().includes(query) ||
           item.description.toLowerCase().includes(query) ||
           item.category.toLowerCase().includes(query)
         )
       }
-      
+
       setFilteredProducts(result)
     }
   }, [activeCategory, searchQuery, products])
@@ -67,9 +67,9 @@ const Items = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start w-full min-h-screen container">
+    <div className="flex flex-col items-center justify-start w-full min-h-screen container  ">
       {/* Search and Filter Section */}
-      <div className="w-full max-w-4xl px-4 mt-20 mb-6">
+      <div className="w-full max-w-4xl px-4 mt-20 mb-6  ">
         {/* Search Bar */}
         <div className="relative mb-6">
           <input
@@ -93,8 +93,8 @@ const Items = () => {
               key={category}
               onClick={() => handleCategoryChange(category)}
               className={`px-4 py-2 text-sm font-medium capitalize transition-colors rounded-full 
-                ${activeCategory === category 
-                  ? 'bg-accent text-white' 
+                ${activeCategory === category
+                  ? 'bg-accent text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
             >
               {category}
@@ -104,7 +104,7 @@ const Items = () => {
       </div>
 
       {/* Products Display */}
-      <div className='w-full h-full flex flex-wrap p-5 justify-center'>
+      <div className='w-full h-full flex flex-wrap p-5 justify-center items-center '>
         {/* Loading State */}
         {state === "loading" && (
           <div className='w-full h-full flex items-center justify-center py-20'>
@@ -120,8 +120,8 @@ const Items = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
               <p className="text-lg font-medium">Failed to load products</p>
-              <button 
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              <button
+                className="mt-4 px-4 py-2  text-white rounded-md "
                 onClick={() => setState("loading")}
               >
                 Try Again
@@ -131,11 +131,17 @@ const Items = () => {
         )}
 
         {/* Success State - Products */}
-        {state === "success" && filteredProducts.length > 0 && (
-          filteredProducts.map((item) => (
-            <ProductCard item={item} key={item._id} />
-          ))
-        )}
+
+        <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 '>
+
+
+          {state === "success" && filteredProducts.length > 0 && (
+            filteredProducts.map((item) => (
+              <ProductCard item={item} key={item._id} />
+            ))
+          )}
+
+        </div>
 
         {/* No Results State */}
         {state === "success" && filteredProducts.length === 0 && (
