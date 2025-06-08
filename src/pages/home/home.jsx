@@ -87,7 +87,7 @@ const Home = () => {
 
 
 
-      <div >
+      <div className='flex flex-col items-center justify-center px-[5%]'>
 
         <p className='text-center text-2xl  font-bold text-accent md:text-[60px] md:pb-10'>Our Services</p>
         <div className='flex flex-col md:flex-row   p-3'>

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import 'swiper/css';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
-import axios from 'axios';
-import ReviewCard from './reviewCard';
+import 'swiper/css/pagination';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import mediaUpload from '../utils/mediaUpload';
-import toast from 'react-hot-toast';
+import ReviewCard from './reviewCard';
+
+import LoadingFeedBackCard from './loadingFeedBackCard';
 
 const StarRating = ({ rating, setRating }) => {
   const stars = [1, 2, 3, 4, 5];
+
 
   return (
     <div className="flex items-center space-x-1">
@@ -46,7 +49,9 @@ const FeedbackSlider = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [productImages, setProductImages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const loading = [1, 2, 3, 4, 5];
+
   
 const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
@@ -61,6 +66,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 
         console.log("Data are", res.data);
         setFeedbacks(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.error("Error fetching reviews:", err.response ? err.response.data : err.message);
         setFeedbacks([]);  // Set to empty array on error
@@ -88,7 +94,6 @@ const user = JSON.parse(localStorage.getItem('user'));
       return;
     }
 
-    setLoading(true);
     try {
       const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
       await axios.post(
@@ -111,14 +116,16 @@ const user = JSON.parse(localStorage.getItem('user'));
       console.error(error);
       toast.error('Error adding review. Please try again.');
     } finally {
-      setLoading(false);
+
+      setIsLoading(false);  // Ensure loading state is reset
+
     }
   };
 
   return (
-    <div>
+    <div className='px-[5%]'>
       <div className="py-4 mx-4 md:hidden">
-        <Swiper
+        {!isLoading && <Swiper
           spaceBetween={25}
           slidesPerView={1}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
@@ -136,7 +143,52 @@ const user = JSON.parse(localStorage.getItem('user'));
               <p className="text-center text-gray-500">No feedback available</p>
             </SwiperSlide>
           )}
-        </Swiper>
+        </Swiper>}
+
+        {isLoading && <Swiper
+          spaceBetween={25}
+          slidesPerView={1}
+          loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+
+           { loading.map((feedback, index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+               
+
+
+
+
+
+
+<LoadingFeedBackCard/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </SwiperSlide>
+            ))}
+     
+       
+        </Swiper>}
 
        {user?.role=="customer" &&  <button
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
@@ -148,7 +200,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 
       <div className="py-4 mx-4 hidden md:block">
-        <Swiper
+       { !isLoading &&<Swiper
           spaceBetween={25}
           slidesPerView={3}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
@@ -166,7 +218,23 @@ const user = JSON.parse(localStorage.getItem('user'));
               <p className="text-center text-gray-500">No feedback available</p>
             </SwiperSlide>
           )}
-        </Swiper>
+        </Swiper>}
+
+        { isLoading &&<Swiper
+          spaceBetween={25}
+          slidesPerView={3}
+        
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+       
+           { loading.map((feedback, index) => (
+              <SwiperSlide key={index} className="flex justify-center items-center">
+                <LoadingFeedBackCard />
+              </SwiperSlide>
+            ))}
+         
+        </Swiper>}
 
        {user?.role=="customer" &&  <button
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
