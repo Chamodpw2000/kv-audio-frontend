@@ -3,6 +3,8 @@ import { formatDate, loadCart } from '../../utils/Cart';
 import BookingItem from '../../components/bookingItem';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from 'react-loading-skeleton';
 
 
 const BookingsPage = () => {

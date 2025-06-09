@@ -21,7 +21,7 @@ const LoadingProductCard = () => {
                                 {/* Title and Badge */}
                                 <div className="flex justify-between items-start">
                                     <h2 className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors">
-                                        <Skeleton width={150} />
+                                        <Skeleton width={220} />
                                     </h2>
                                  <Skeleton width={80} height={20} className="bg-gray-200 rounded-full" />
                                 </div>

@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const [activeOrder, setActiveOrder] = useState(null);
+    const loadingArray = [1, 2, 3, 4, 5];
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -57,7 +60,31 @@ const Orders = () => {
 
           <div  className='w-full flex flex-row items-start justify-center p-4 min-h-[200px]'>
           {loading ? (
-                <p>Loading...</p>
+                <div>
+ <table className='table-auto border-collapse border border-gray-300 w-full min-w-[600px]'>
+                        <thead>
+                            <tr className='bg-gray-200'>
+                                <th className='border p-2'>Order ID</th>
+                                <th className='border p-2'>Customer Email</th>
+                                <th className='border p-2'>Order Date</th>
+                                <th className='border p-2'>Total Cost</th>
+                                <th className='border p-2'>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loadingArray.map(order => (
+                                <tr key={order} className='text-center ' >
+                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                </div>
             ) : (
                 <div className="w-full overflow-x-auto">
                     <table className='table-auto border-collapse border border-gray-300 w-full min-w-[600px]'>

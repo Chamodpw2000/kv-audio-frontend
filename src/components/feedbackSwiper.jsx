@@ -52,13 +52,13 @@ const FeedbackSlider = () => {
   const [isLoading, setIsLoading] = useState(true);
   const loading = [1, 2, 3, 4, 5];
 
-  
-const user = JSON.parse(localStorage.getItem('user'));
+
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
         const token = localStorage.getItem('token');
-     
+
 
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -108,7 +108,7 @@ const user = JSON.parse(localStorage.getItem('user'));
       setComment('');
       setProductImages([]);
       setModelOpen(false);
-     
+
       // Refresh feedbacks after adding a new one
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`);
       setFeedbacks(res.data);
@@ -153,16 +153,8 @@ const user = JSON.parse(localStorage.getItem('user'));
           modules={[Autoplay, Pagination, Navigation]}
         >
 
-           { loading.map((feedback, index) => (
-              <SwiperSlide key={index} className="flex justify-center items-center">
-               
-
-
-
-
-
-
-<LoadingFeedBackCard/>
+          {loading.map((feedback, index) => (
+            <SwiperSlide key={index} className="flex justify-center items-center">
 
 
 
@@ -170,6 +162,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 
 
+              <LoadingFeedBackCard />
 
 
 
@@ -184,13 +177,20 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 
 
-              </SwiperSlide>
-            ))}
-     
-       
+
+
+
+
+
+
+
+            </SwiperSlide>
+          ))}
+
+
         </Swiper>}
 
-       {user?.role=="customer" &&  <button
+        {user?.role == "customer" && <button
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary hover:border-2 "
           onClick={() => setModelOpen(true)}
         >
@@ -200,7 +200,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 
       <div className="py-4 mx-4 hidden md:block">
-       { !isLoading &&<Swiper
+        {!isLoading && <Swiper
           spaceBetween={25}
           slidesPerView={3}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
@@ -220,23 +220,23 @@ const user = JSON.parse(localStorage.getItem('user'));
           )}
         </Swiper>}
 
-        { isLoading &&<Swiper
+        {isLoading && <Swiper
           spaceBetween={25}
           slidesPerView={3}
-        
+
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
         >
-       
-           { loading.map((feedback, index) => (
-              <SwiperSlide key={index} className="flex justify-center items-center">
-                <LoadingFeedBackCard />
-              </SwiperSlide>
-            ))}
-         
+
+          {loading.map((feedback, index) => (
+            <SwiperSlide key={index} className="flex justify-center items-center">
+              <LoadingFeedBackCard />
+            </SwiperSlide>
+          ))}
+
         </Swiper>}
 
-       {user?.role=="customer" &&  <button
+        {user?.role == "customer" && <button
           className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary border-2 "
           onClick={() => setModelOpen(true)}
         >
