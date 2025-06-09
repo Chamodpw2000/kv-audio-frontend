@@ -57,7 +57,7 @@ const AdminDashboard = () => {
         <div>
 
 
-            <div className='w-full min-h-screen  flex'>
+            <div className='w-full min-h-screen  flex mt-[70px]'>
 
                 <div className='w-[200px] min-h-full bg-green-200'>
 

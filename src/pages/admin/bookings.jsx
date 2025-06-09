@@ -52,7 +52,7 @@ const Orders = () => {
     }
 
     return (
-        <div className='mt-[100px]'>
+        <div className='mt-[100px] min-h-[50vh] flex flex-col items-center justify-center w-full px-4'>
           <h3 className="text-4xl font-bold text-center text-accent mb-5">
             All Orders
           </h3>
@@ -74,11 +74,11 @@ const Orders = () => {
                         <tbody>
                             {loadingArray.map(order => (
                                 <tr key={order} className='text-center ' >
-                                    <td className='border p-2'><Skeleton width={220} /></td>
-                                    <td className='border p-2'><Skeleton width={220} /></td>
-                                    <td className='border p-2'><Skeleton width={220} /></td>
-                                    <td className='border p-2'><Skeleton width={220} /></td>
-                                    <td className='border p-2'><Skeleton width={220} /></td>
+                                    <td className='border p-2'><Skeleton width={280} /></td>
+                                    <td className='border p-2'><Skeleton width={280} /></td>
+                                    <td className='border p-2'><Skeleton width={280} /></td>
+                                    <td className='border p-2'><Skeleton width={280} /></td>
+                                    <td className='border p-2'><Skeleton width={280} /></td>
                                 </tr>
                             ))}
                         </tbody>
