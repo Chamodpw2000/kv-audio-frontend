@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { removeFromCart, addToCart } from '../utils/Cart.jsx';
 import { FaTrash } from 'react-icons/fa';
+import Skelton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const BookingItem = ({ itemKey, qty, refresh }) => {
     const [item, setItem] = useState(null);
@@ -61,7 +63,33 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
     }, [status]);
 
     if (status === 'loading') {
-        return <div className='text-accent animate-pulse'>Loading...</div>;
+        return <div className=''>
+            
+            
+        <Skelton  width={600} height={400} className='mb-4' />
+       
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            </div>;
     }
     if (status === 'error') {
         return <div className='text-red-500'>Error loading item.</div>;

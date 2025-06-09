@@ -10,13 +10,13 @@ const ReviewCard = ({ review }) => {
 
     const fetchUser = async () => {
       try {
+        
         const token = localStorage.getItem('token');
 
 
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUserPic/${review?.email}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUser/${review.email}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-
         console.log("Data are", res.data);
         setUser(res.data);
       } catch (err) {
@@ -31,8 +31,8 @@ const ReviewCard = ({ review }) => {
 
   }, [])
   // Default values for null handling
-  const profilePicture =user || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
-  const name = review?.name || "Anonymous";
+  const profilePicture =user?.profilePicture || "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg";
+  const name = `${user?.firstName}  ${user?.lastName}` ;
   const email = review?.email || "No email provided";
   const rating = Number.isInteger(review?.rating) ? review.rating : 0;
   const comment = review?.comment || "No comment available.";

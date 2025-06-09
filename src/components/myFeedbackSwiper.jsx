@@ -6,7 +6,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import axios from 'axios';
-
+import delay from 'delay';
 import mediaUpload from '../utils/mediaUpload';
 import toast from 'react-hot-toast';
 import MyReviewCard from './myFeedbackCard';
@@ -61,6 +61,8 @@ const MyFeedbackSlider = () => {
 
 
   const deleteFeedback = async (id) => {
+       setLoading(true);
+
     console.log(id);
     
     const token = localStorage.getItem('token');
@@ -69,7 +71,7 @@ const MyFeedbackSlider = () => {
       return;
     }
 
-    setLoading(true);
+ 
     try {
       console.log("Deleting feedback with ID:", id);
       
@@ -301,6 +303,7 @@ setModelOpen(false);
         <div className="fixed inset-0  z-10 bg-black bg-opacity-50 flex justify-center items-center p-[5%] pt-[60px] md:pt-[0px] md:px-[20%] flex-col">
           <div className=' flex flex-col m-5 border-2 border-accent w-full bg-white p-5 rounded-3xl'>
             <h1 className='text-2xl font-bold text-center text-accent'>Edit the Review</h1>
+            <p className='text-center my-3'>After editing your review will bent back for the approval !</p>
             <label className='my-2'>Item Id (Optional)
               <input type="text" className='w-full rounded-xl h-[40px] border-2 border-secondary p-2' value={currentFeedback.itemId} name="id" onChange={handleChange} readOnly />
             </label>
@@ -325,7 +328,9 @@ setModelOpen(false);
               </button>
               <button
                 className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-red-600 hover:border-red-600 transition-colors border-2"
-                onClick={() => setModelOpen(false)}
+                onClick={() => setModelOpen(false)
+
+                }
               >
                 Cancel
               </button>
@@ -334,8 +339,8 @@ setModelOpen(false);
                             <button
                 className="mt-4 block w-full max-w-[200px] py-2 font-medium text-center text-white bg-red-600 rounded-md hover:bg-white hover:text-red-600 hover:border-red-600 transition-colors border-2"
                 onClick={() => deleteFeedback(currentFeedback._id)}
-              >
-               Delete Feedback
+                disabled={loading}
+              >{ loading ? 'Deleting...' : 'Delete Feedback'}
               </button>
             </div>
           </div>

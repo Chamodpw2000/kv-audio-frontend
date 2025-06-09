@@ -90,7 +90,7 @@ const Footer = () => {
 
                 {/* Footer Bottom */}
                 <div className="mt-8 text-center text-bold">
-                    <p>&copy; 2025 Party Items Rental. All rights reserved.</p>
+                    <p>&copy; 2025 KV Audio. All rights reserved.</p>
                 </div>
             </div>
         </footer>
