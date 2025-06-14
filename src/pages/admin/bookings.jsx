@@ -52,7 +52,7 @@ const Orders = () => {
     }
 
     return (
-        <div className='mt-[100px] min-h-[50vh] flex flex-col items-center justify-center w-full px-4'>
+        <div className='lg:mt-[100px] mt-[50px] min-h-[50vh] flex flex-col items-center justify-center w-full px-4'>
           <h3 className="text-4xl font-bold text-center text-accent mb-5">
             All Orders
           </h3>

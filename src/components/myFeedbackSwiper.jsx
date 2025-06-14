@@ -216,7 +216,24 @@ setModelOpen(false);
          {loading &&
         <Swiper
           spaceBetween={25}
-          slidesPerView={3}
+          slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
       
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
@@ -233,14 +250,7 @@ setModelOpen(false);
           }
         </Swiper>}
 
-        {user?.role === "customer" && (
-          <button
-            className="block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary hover:border-secondary"
-            onClick={() => setModelOpen(true)}
-          >
-            Add a Review
-          </button>
-        )}
+        
       </div>
 
       {/* Desktop View */}
@@ -250,7 +260,24 @@ setModelOpen(false);
         {!loading &&
         <Swiper
           spaceBetween={25}
-          slidesPerView={3}
+     slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
           loop={feedbacks.length > 1}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
@@ -280,7 +307,24 @@ setModelOpen(false);
          {loading &&
         <Swiper
           spaceBetween={25}
-          slidesPerView={3}
+ slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
           loop={feedbacks.length > 1}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}

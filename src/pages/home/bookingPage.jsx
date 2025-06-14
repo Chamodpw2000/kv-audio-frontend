@@ -76,8 +76,8 @@ const BookingsPage = () => {
     };
 
     return (
-        <div className="w-full min-h-screen flex flex-col items-center p-5  md:mt-[100px]">
-            <div className="w-full flex flex-col items-center bg-white p-5 rounded-lg shadow-lg">
+        <div className="w-full min-h-screen flex flex-col items-center lg:p-[5%]  mt-[100px]">
+            <div className="w-full flex flex-col items-center bg-white  rounded-lg shadow-lg">
                          <h3 className="text-4xl font-bold text-center text-accent mb-6">
             Place Your Order !
           </h3>

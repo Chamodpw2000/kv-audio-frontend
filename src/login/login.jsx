@@ -115,7 +115,7 @@ const LoginPage = ({ auth, setAuth }) => {
                        New to KV-Audio?
                     </p>
 
-                    <Link to="/home/register" className='hover:text-accent font-bold text-white '>
+                    <Link to="/register" className='hover:text-accent font-bold text-white '>
                        Register here !</Link>
 
 

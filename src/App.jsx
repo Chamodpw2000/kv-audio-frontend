@@ -31,6 +31,9 @@ function App() {
             <Toaster position="top-right" />
             <Header auth={auth} setAuth={setAuth} />
             <Routes>
+                <Route path="/register" element={<RegisterPage  />} />
+                    <Route path="/login" element={<LoginPage setAuth={setAuth} auth={auth} />} />
+
                 <Route path="/admin/*" element={<AdminDashboard />} />
                 <Route path="/home/*" element={<HomePage auth={auth} setAuth={setAuth} />} />
                 <Route path="/test" element={<Testing />} />

@@ -13,7 +13,7 @@ const Home = () => {
 
 
 
-      <div className="min-h-screen bg-gradient-to-b from-accent to-white pt-10 px-4 sm:px-6 md:px-8">
+      <div className=" bg-gradient-to-b from-accent to-white py-[5%] px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:space-x-8 items-center rounded-3xl overflow-hidden ">
 
@@ -89,10 +89,10 @@ const Home = () => {
 
 
 
-      <div className='flex flex-col items-center justify-center px-[5%]'>
+      <div className='flex flex-col items-center justify-center  '>
 
         <p className='text-center text-2xl  font-bold text-accent md:text-[60px] md:pb-10'>Our Services</p>
-        <div className='flex flex-col md:flex-row   p-3'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-3'>
           <div className='flex flex-col items-center justify-center bg-primary rounded-3xl p-3 m-1'>
             <img src="./sounds.jpg" alt="sound" className='h-[120px] md:h-[450px] w-[300px] rounded-3xl object-cover' />
             <p className='text-center text-lg font-bold py-2 text-secondary md:text-3xl' >Sound Systems</p>

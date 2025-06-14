@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const Footer = () => {
+
+    const handleSubscribe = async (email) => {
+
+
+        console.log("Subscribing with email:", email);
+
+
+        try {
+
+            const responce = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/newsletter/subscribe`, { email });
+            console.log("Subscription response:", responce);
+            if (responce.status === 200) {
+                toast.success("Subscribed successfully!");
+            } else{
+                toast("You have already subscribed with this email.");
+            }
+            setEmail("");
+        } catch (e) {
+            console.log("Error subscribing:", e);
+            toast.error("Failed to subscribe. Please try again later.");
+
+        }
+
+    }
+
+
+    const [email, setEmail] = useState("");
+
+
     return (
         <footer className="bg-accent text-white py-8">
             <div className="container mx-auto px-4">
@@ -9,21 +40,21 @@ const Footer = () => {
                 <div className="flex-col   justify-center items-center">
 
                     <div className="flex justify-center items-center">
-                    <img
-                        src="/logo.png" // Image from the public folder
-                        alt="Party Rental Logo"
-                        className="h-24 w-auto" // Increase the logo size
-                    />
+                        <img
+                            src="/logo.png" // Image from the public folder
+                            alt="Party Rental Logo"
+                            className="h-24 w-auto" // Increase the logo size
+                        />
                     </div>
 
 
                     <div>
 
-                    <h1 className="text-xl text-center font-semibold">KV Audio</h1>
+                        <h1 className="text-xl text-center font-semibold">KV Audio</h1>
 
 
                     </div>
-                   
+
                 </div>
 
 
@@ -57,7 +88,7 @@ const Footer = () => {
                         <div className="w-full sm:w-1/2 md:w-1/4 mb-6">
                             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
                             <ul>
-                        
+
                                 <li>
                                     <a href="/home/items" className="hover:text-secondary">Products</a>
                                 </li>
@@ -71,19 +102,22 @@ const Footer = () => {
                         <div className="w-full sm:w-1/2 md:w-1/4 mb-6">
                             <h3 className="text-lg font-semibold mb-3">Subscribe</h3>
                             <p>Stay updated with the latest party items and special offers!</p>
-                            <form className="mt-2">
+                            <div className="mt-2">
                                 <input
                                     type="email"
                                     placeholder="Your Email"
                                     className="w-full p-2 mt-2 text-black rounded-lg"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                                 <button
                                     type="submit"
-                                    className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary  hover:border-secondary  "
+                                    className="mt-4 block w-full py-2 font-medium text-center text-white bg-secondary rounded-md hover:bg-white hover:text-secondary  hover:border-secondary  " onClick={() => { handleSubscribe(email) }}
                                 >
                                     Subscribe
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
