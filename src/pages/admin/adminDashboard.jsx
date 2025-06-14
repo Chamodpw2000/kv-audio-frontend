@@ -17,6 +17,7 @@ import ManageGallary from '../../components/manageGallary'
 import AddGallaryItem from '../../components/addGallaryItem'
 import { VscFeedback } from "react-icons/vsc";
 import Feedbacks from './feedbacks'
+import Dashboard from './Dashboard'
 
 
 const AdminDashboard = () => {
@@ -59,7 +60,7 @@ const AdminDashboard = () => {
 
             <div className='w-full min-h-screen  flex mt-[70px]'>
 
-                <div className='w-[200px] min-h-full bg-green-200'>
+                <div className='w-[200px] min-h-full bg-green-200 hidden lg:block'>
 
                     <Link to="/admin" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
                         <MdOutlineDashboard className="w-[25px] h-[25px]" />
@@ -107,7 +108,7 @@ const AdminDashboard = () => {
 
 {userValidated && 
                     <Routes path="/*" >
-                        <Route path="/" element={<h1> Dashboard </h1>} />
+                        <Route path="/" element={<Dashboard/>} />
 
                         <Route path="/bookings" element={<Orders />} />
                         <Route path="/items" element={<ItemsPageAdmin />} />

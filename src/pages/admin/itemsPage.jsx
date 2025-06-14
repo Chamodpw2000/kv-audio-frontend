@@ -6,7 +6,6 @@ import axios from "axios";
 const ItemsPageAdmin = () => {
   const [items, setItems] = useState([]);
   const [itemsLoaded, setitemsLoaded] = useState(false);
-
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -47,54 +46,187 @@ const ItemsPageAdmin = () => {
   };
 
   return (
-    <div className="w-full min-h-screen relative bg-gray-100 p-6 flex justify-center items-center flex-col">
+    <div className="w-full min-h-screen bg-gray-100 p-2 sm:p-4 lg:p-6 overflow-x-hidden relative">
       {!itemsLoaded && (
-        <div className="border-4 my-4 border-b-green-500 h-[100px] w-[100px] rounded-full flex justify-center items-center animate-spin relative" />
+        <div className="flex justify-center items-center min-h-[400px]">
+          <div className="border-4 my-4 border-b-green-500 h-[100px] w-[100px] rounded-full flex justify-center items-center animate-spin relative" />
+        </div>
       )}
 
       {itemsLoaded && (
-        <div>
-          {/* Add Item Button */}
-          <Link to="/admin/additem">
-            <CiCirclePlus className="text-red-600 text-[50px] absolute right-4 bottom-4 hover:text-red-800 hover:text-[65px] transition-all cursor-pointer" />
-          </Link>
+        <div className="w-full relative">
+          {/* Add Item Button - Positioned within screen bounds */}
+          <div className="fixed right-2 sm:right-4 bottom-2 sm:bottom-4 z-10">
+            <div className="max-w-screen-xl mx-auto relative">
+              <Link to="/admin/additem">
+                <CiCirclePlus className="text-red-600 text-[40px] sm:text-[50px] hover:text-red-800 hover:text-[50px] sm:hover:text-[65px] transition-all cursor-pointer drop-shadow-lg" />
+              </Link>
+            </div>
+          </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-              <thead className="bg-red-500 text-white">
-                <tr>
-                  <th className="py-3 px-5 text-left">Key</th>
-                  <th className="py-3 px-5 text-left">Name</th>
-                  <th className="py-3 px-5 text-left">Price</th>
-                  <th className="py-3 px-5 text-left">Category</th>
-                  <th className="py-3 px-5 text-left">Dimensions</th>
-                  <th className="py-3 px-5 text-left">Description</th>
-                  <th className="py-3 px-5 text-center">Availability</th>
-                  <th className="py-3 px-5 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.length > 0 ? (
-                  items.map((item) => (
-                    <tr
-                      key={item._id}
-                      className="border-b hover:bg-gray-50 transition"
-                    >
-                      <td className="py-3 px-5">{item.key}</td>
-                      <td className="py-3 px-5">{item.name}</td>
-                      <td className="py-3 px-5">${item.price}</td>
-                      <td className="py-3 px-5">{item.category}</td>
-                      <td className="py-3 px-5">{item.dimentions}</td>
-                      <td className="py-3 px-5 max-w-xs">
-                        <div className="relative">
+          {/* Mobile Card View */}
+          <div className="block lg:hidden space-y-4 pb-20">
+            {items.length > 0 ? (
+              items.map((item) => (
+                <div
+                  key={item._id}
+                  className="bg-white rounded-lg shadow-md p-4 border"
+                >
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-semibold text-lg text-gray-800 flex-1 pr-2">
+                        {item.name}
+                      </h3>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs text-white flex-shrink-0 ${
+                          item.availability ? "bg-green-500" : "bg-red-500"
+                        }`}
+                      >
+                        {item.availability ? "Available" : "Not Available"}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div>
+                        <span className="font-medium text-gray-600">Key:</span>
+                        <p className="text-gray-800 break-words">{item.key}</p>
+                      </div>
+                      <div>
+                        <span className="font-medium text-gray-600">Price:</span>
+                        <p className="text-gray-800">${item.price}</p>
+                      </div>
+                      <div>
+                        <span className="font-medium text-gray-600">Category:</span>
+                        <p className="text-gray-800 break-words">{item.category}</p>
+                      </div>
+                      <div>
+                        <span className="font-medium text-gray-600">Dimensions:</span>
+                        <p className="text-gray-800 break-words">{item.dimentions}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="font-medium text-gray-600">Description:</span>
+                      <div className="mt-1">
+                        <p
+                          className={`text-sm text-gray-800 break-words ${
+                            item.showFullDescription ? "" : "line-clamp-3"
+                          }`}
+                        >
+                          {item.description}
+                        </p>
+                        {item.description.length > 150 && (
+                          <button
+                            className="text-blue-600 text-xs mt-1 hover:underline"
+                            onClick={() => {
+                              setItems((prevItems) =>
+                                prevItems.map((i) =>
+                                  i._id === item._id
+                                    ? {
+                                        ...i,
+                                        showFullDescription: !i.showFullDescription,
+                                      }
+                                    : i
+                                )
+                              );
+                            }}
+                          >
+                            {item.showFullDescription ? "Show Less" : "Show More"}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        onClick={() =>
+                          navigate("/admin/items/edit", { state: item })
+                        }
+                        className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md transition text-sm"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.key)}
+                        className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md transition text-sm"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-500 font-semibold bg-white rounded-lg">
+                No items available
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden lg:block pb-20">
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+              {/* Table Header - Fixed */}
+              <div className="bg-red-500 text-white">
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-red-600 scrollbar-track-red-300">
+                  <div className="min-w-[1200px]">
+                    <div className="grid grid-cols-8 gap-0">
+                      <div className="py-3 px-4 text-left font-medium w-[100px]">Key</div>
+                      <div className="py-3 px-4 text-left font-medium w-[150px]">Name</div>
+                      <div className="py-3 px-4 text-left font-medium w-[80px]">Price</div>
+                      <div className="py-3 px-4 text-left font-medium w-[120px]">Category</div>
+                      <div className="py-3 px-4 text-left font-medium w-[120px]">Dimensions</div>
+                      <div className="py-3 px-4 text-left font-medium w-[300px]">Description</div>
+                      <div className="py-3 px-4 text-center font-medium w-[120px]">Availability</div>
+                      <div className="py-3 px-4 text-center font-medium w-[180px]">Actions</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Table Body - Scrollable */}
+              <div className="max-h-[70vh] overflow-y-auto overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                <div className="min-w-[1200px]">
+                  {items.length > 0 ? (
+                    items.map((item, index) => (
+                      <div
+                        key={item._id}
+                        className={`grid grid-cols-8 gap-0 border-b hover:bg-gray-50 transition ${
+                          index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                        }`}
+                      >
+                        <div className="py-3 px-4 w-[100px] overflow-hidden">
+                          <span className="block truncate" title={item.key}>
+                            {item.key}
+                          </span>
+                        </div>
+                        <div className="py-3 px-4 w-[150px] overflow-hidden">
+                          <span className="block truncate" title={item.name}>
+                            {item.name}
+                          </span>
+                        </div>
+                        <div className="py-3 px-4 w-[80px]">
+                          ${item.price}
+                        </div>
+                        <div className="py-3 px-4 w-[120px] overflow-hidden">
+                          <span className="block truncate" title={item.category}>
+                            {item.category}
+                          </span>
+                        </div>
+                        <div className="py-3 px-4 w-[120px] overflow-hidden">
+                          <span className="block truncate" title={item.dimentions}>
+                            {item.dimentions}
+                          </span>
+                        </div>
+                        <div className="py-3 px-4 w-[300px]">
                           <p
-                            className={`text-sm ${
-                              item.showFullDescription ? "" : "line-clamp-5"
+                            className={`text-sm break-words ${
+                              item.showFullDescription ? "" : "line-clamp-3"
                             }`}
                           >
                             {item.description}
                           </p>
-                          {item.description.length > 300 && (
+                          {item.description.length > 200 && (
                             <button
                               className="text-blue-600 text-xs mt-1 hover:underline"
                               onClick={() => {
@@ -103,60 +235,52 @@ const ItemsPageAdmin = () => {
                                     i._id === item._id
                                       ? {
                                           ...i,
-                                          showFullDescription:
-                                            !i.showFullDescription,
+                                          showFullDescription: !i.showFullDescription,
                                         }
                                       : i
                                   )
                                 );
                               }}
                             >
-                              {item.showFullDescription
-                                ? "Show Less"
-                                : "Show More"}
+                              {item.showFullDescription ? "Show Less" : "Show More"}
                             </button>
                           )}
                         </div>
-                      </td>
-                      <td className="py-3 px-5 text-center">
-                        <span
-                          className={`inline-block min-w-[120px] px-3 py-1 rounded-full text-white text-center ${
-                            item.availability ? "bg-green-500" : "bg-red-500"
-                          }`}
-                        >
-                          {item.availability ? "Available" : "Not Available"}
-                        </span>
-                      </td>
-                      <td className="py-3 px-5 flex justify-center gap-3">
-                        <button
-                          onClick={() =>
-                            navigate("/admin/items/edit", { state: item })
-                          }
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item.key)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="8"
-                      className="text-center py-5 text-gray-500 font-semibold"
-                    >
+                        <div className="py-3 px-4 w-[120px] flex justify-center items-center">
+                          <span
+                            className={`inline-block px-3 py-1 rounded-full text-white text-xs ${
+                              item.availability ? "bg-green-500" : "bg-red-500"
+                            }`}
+                          >
+                            {item.availability ? "Available" : "Not Available"}
+                          </span>
+                        </div>
+                        <div className="py-3 px-4 w-[180px] flex justify-center items-center gap-2">
+                          <button
+                            onClick={() =>
+                              navigate("/admin/items/edit", { state: item })
+                            }
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition text-sm"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item.key)}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md transition text-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-500 font-semibold">
                       No items available
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
