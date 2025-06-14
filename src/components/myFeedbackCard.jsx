@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
 
 
 const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) => {
@@ -8,10 +9,12 @@ const MyReviewCard = ({ review , setModelOpen, setCurrentFeedback , setRating}) 
   // Default values for null handlingo
   
 const [user, setUser] = useState(null);
+const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
     const fetchUser = async () => {
+    setLoading(true);
       try {
         const token = localStorage.getItem('token');
 
@@ -24,9 +27,11 @@ const [user, setUser] = useState(null);
 
         console.log("Data are", res.data);
         setUser(res.data);
+        setLoading(false);
       } catch (err) {
 
         console.log("Error fetching user:", err);
+        setLoading(false);
 
       }
     };
@@ -61,7 +66,8 @@ const [user, setUser] = useState(null);
           
           <div className="flex-1">
             {/* Name & Email */}
-            <h3 className="text-lg font-semibold truncate">{name}</h3>
+            {!loading && <h3 className="text-lg font-semibold truncate">{name}</h3>}
+            {loading && <Skeleton className="!w-[300px]" />}
             <p className="text-xs text-gray-500 truncate">{email}</p>
           </div>
         </div>

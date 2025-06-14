@@ -129,8 +129,8 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
                             <p className='text-gray-700'>
                                 <span className='font-semibold'>Unit Price:</span> LKR {item.price.toFixed(2)}
                             </p>
-                            <div className='flex items-center gap-3 my-2'>
-                                <span className='font-semibold'>Quantity:</span>
+                            <div className='flex items-start lg:items-center flex-col lg:flex-row gap-3 my-2 '>
+                                <span className='font-semibold text-left'>Quantity:</span>
                                 <div className='flex items-center border rounded-lg'>
                                     <button
                                         onClick={handleDecrement}

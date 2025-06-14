@@ -60,7 +60,24 @@ const Slider = () => {
                   
                   { !isLoading && <Swiper
 
-                        slidesPerView={1}
+                   slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 25,
+    },
+  }}
                         spaceBetween={25}
                         loop={true}
                         autoplay={{
@@ -85,7 +102,24 @@ const Slider = () => {
                     {
                         isLoading && <Swiper
 
-                        slidesPerView={1}
+                       slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 25,
+    },
+  }}
                         spaceBetween={25}
                         loop={true}
                         autoplay={{
@@ -125,7 +159,24 @@ const Slider = () => {
                     <div>
                         <Swiper
                             spaceBetween={25}
-                            slidesPerView={4}
+                   slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 25,
+    },
+  }}
 
                             loop={true}
                             autoplay={{
@@ -156,7 +207,24 @@ const Slider = () => {
 
  <Swiper
                             spaceBetween={25}
-                            slidesPerView={4}
+                    slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 25,
+    },
+  }}
 
                             loop={true}
                             autoplay={{

@@ -128,6 +128,23 @@ const FeedbackSlider = () => {
         {!isLoading && <Swiper
           spaceBetween={25}
           slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
@@ -202,7 +219,24 @@ const FeedbackSlider = () => {
       <div className="py-4 mx-4 hidden md:block">
         {!isLoading && <Swiper
           spaceBetween={25}
-          slidesPerView={3}
+    slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
           loop={feedbacks && feedbacks.length > 1}  // Only enable loop if there are multiple slides
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
@@ -222,8 +256,24 @@ const FeedbackSlider = () => {
 
         {isLoading && <Swiper
           spaceBetween={25}
-          slidesPerView={3}
-
+         slidesPerView={1}
+  breakpoints={{
+    // sm: 640px
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    // md: 768px  
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 25,
+    },
+    // lg: 1024px
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  }}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           modules={[Autoplay, Pagination, Navigation]}
         >

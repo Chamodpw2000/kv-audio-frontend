@@ -129,7 +129,7 @@ const VerifyEmail = ({ setAuth , auth }) => {
 
           <div className="text-center">
             <button
-              onClick={() => navigate('/home/login')}
+              onClick={() => navigate('/login')}
               className="text-gray-600 hover:text-accent text-sm"
             >
               Back to Login

@@ -44,7 +44,7 @@ const RegisterPage = () => {
         ).then((res)=>{
             console.log(res);
             toast.success("Registered Successfully");
-            navigate('/home/login');
+            navigate('/login');
         }).catch((err)=>{
             console.log(err);
             toast.error(err?.response?.data?.error||"An error occured");
@@ -112,7 +112,7 @@ const RegisterPage = () => {
     Already have an account?
  </p>
 
-<Link to="/home/login" className='hover:text-accent font-bold text-white'>
+<Link to="/login" className='hover:text-accent font-bold text-white'>
 Login here !</Link>
     
 </div>
