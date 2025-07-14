@@ -1,4 +1,4 @@
-import OrdersPerItem from '@/components/adminDashboard/OrdersPerItem'
+import OrdersPerItem from '@/components/adminDashboard/ordersPerItem'
 import OrdersPerMonthChart from '@/components/adminDashboard/ordersPerMonthChart'
 import ProductTypesPieChart from '@/components/adminDashboard/productTypesPieChart'
 import TopCustomers from '@/components/adminDashboard/topCustomers'

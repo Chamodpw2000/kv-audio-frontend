@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/chart"
 import Selecter from "./selecter"
 import Calander from "./calander"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
 export const description = "A bar chart"
