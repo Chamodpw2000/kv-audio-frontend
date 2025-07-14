@@ -1,15 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Command, CommandInput, CommandItem, CommandList, CommandEmpty, CommandGroup } from '@/components/ui/command';
 import toast from 'react-hot-toast';
 import { Button } from "@/components/ui/button"
+import axios from 'axios';
 
-const products = [
-    "Apple", "Banana", "Blueberry", "Grapes", "Pineapple", "Strawberry",
-    "Watermelon", "Orange", "Kiwi", "Mango", "Peach", "Pear", "Plum",
-    "Raspberry", "Blackberry", "Coconut", "Papaya"
-];
+
 
 const Selecter = ({ selections, setSelections }) => {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+
+        async function fetchItemCodes() {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    console.log("No token found");
+                    return;
+                }
+                
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/analytics/itemcodes`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                
+                console.log("Response:", response.data);
+                setProducts(response.data || []);
+            } catch (error) {
+                console.error("Error fetching item codes:", error);
+                setProducts([]);
+            }
+        }
+
+        fetchItemCodes();
+
+    }, [])
 
     const [selected, setSelected] = useState('');
     const [input, setInput] = useState('');
@@ -49,7 +76,7 @@ const Selecter = ({ selections, setSelections }) => {
                 <CommandList>
                     <CommandEmpty>No Product found...</CommandEmpty>
                     <CommandGroup heading="Suggestions">
-                        {products
+                        {products && Array.isArray(products) && products
                             .filter((product) => product.toLowerCase().includes(input.toLowerCase()))
                             .map((product) => (
                                 <CommandItem

@@ -61,8 +61,13 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  }
+  html {
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   }
 }

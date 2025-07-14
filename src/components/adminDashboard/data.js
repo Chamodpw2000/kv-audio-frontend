@@ -1,10 +1,7 @@
-export const productTypesPieChartData = [
-  { type: "sounds", items: 275, fill: "#4285F4" },
-  { type: "lighting", items: 200, fill: "#F9A825" },
-  { type: "furniture", items: 187, fill: "#FF5722" },
-  { type: "decorations", items: 173, fill: "#00BFAE" },
+import { useEffect } from "react"
 
-]
+
+
 
 export const ordersPerMonthChartData = [
   { month: "January", orders: 186 },

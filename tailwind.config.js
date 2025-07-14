@@ -10,6 +10,9 @@ export default {    darkMode: ["class"],
         // secondary : "#F9A825",
         // accent : "#3674B5"
   	extend: {
+  		fontFamily: {
+  			sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+  		},
   		colors: {
    			primary: '#FBFBFB',
   			secondary: '#F9A825',

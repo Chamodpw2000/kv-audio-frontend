@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 
 export function Calander({ selections, setSelections }) {
     const [dateRange, setDateRange] = useState({
-        from: new Date(2025, 5, 12),
-        to: new Date(2025, 5, 18)
+        from: null,
+        to: null
     });
 
     const handleReset = () => {
@@ -21,7 +21,7 @@ export function Calander({ selections, setSelections }) {
         <div className="space-y-4 flex items-center justify-center flex-col w-full">
             <Calendar
                 mode="range"
-                defaultMonth={dateRange.from}
+                defaultMonth={new Date()}
                 selected={dateRange}
                 onSelect={(range) => {
                     if (range && range.from && range.to) {

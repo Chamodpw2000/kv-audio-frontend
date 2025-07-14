@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <div className='overflow-x-hidden'>
 
-        <div className='flex flex-col lg:flex-row w-full'>
+        <div className='flex flex-col 2xl:flex-row w-full'>
             <div className='lg:flex lg:flex-1 w-full'>
                 <ProductTypesPieChart />
             </div>
