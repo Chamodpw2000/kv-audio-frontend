@@ -7,8 +7,10 @@ import { IoIosLogIn } from "react-icons/io";
 import { BiLogIn } from "react-icons/bi";
 import { TbLogout2 } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaRegUser, FaShoppingCart } from 'react-icons/fa';
 import { RiAccountPinBoxLine } from "react-icons/ri";
+import { VscFeedback } from 'react-icons/vsc';
+import { CgMusicSpeaker } from 'react-icons/cg';
 
 
 
@@ -72,12 +74,26 @@ const user = JSON.parse(localStorage.getItem('user'));
                 <MdHeadset className='mr-2' /> Items
               </div>
 
-                  {user && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/home/myprofile')}>
+                  {user && user.role=="customer" && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/home/myprofile')}>
                 <MdAccountCircle className='mr-2' /> Profile
               </div>}
-                           {user && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/home/booking')}>
+                           {user && user.role=="customer" && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/home/booking')}>
                 <FaShoppingCart className='mr-2' /> Cart
               </div>}
+
+
+              {user && user.role=="admin" && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/admin/feedback')}>
+                <VscFeedback className='mr-2' /> Feedbacks
+              </div>}
+
+                  {user && user.role=="admin" && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/admin/users')}>
+                <FaRegUser className='mr-2' /> Users
+              </div>}
+
+                      {user && user.role=="admin" && <div className="text-[20px] text-accent m-2 cursor-pointer flex items-center" onClick={() => goto('/admin/items')}>
+                <CgMusicSpeaker className='mr-2' /> Items (Admin) 
+              </div>}
+              
             </div>
           </div>
         </div>
