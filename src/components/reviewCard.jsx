@@ -19,7 +19,7 @@ const ReviewCard = ({ review }) => {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getUser/${review.email}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log("Data are", res.data);
+   
         setUser(res.data);
         setLoading(false);
       } catch (err) {

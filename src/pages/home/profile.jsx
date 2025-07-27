@@ -29,7 +29,7 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      console.log("res data", response.data);
+
       setUser(response.data);
       setFormData(response.data);
       setLoading(false);
@@ -86,7 +86,7 @@ const Profile = () => {
         updatedFormData.profilePicture = photoUrl;
       }
 
-      console.log("formData", updatedFormData);
+
       // Replace with your actual API endpoint
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/update`,

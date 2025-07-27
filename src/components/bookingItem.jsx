@@ -20,8 +20,7 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
     const handleDecrement = () => {
         if (quantity > 1) {
             addToCart(itemKey, -1);
-            console.log(itemKey);
-            console.log(quantity);
+
 
 
 
@@ -34,7 +33,7 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
         }
 
         else {
-            console.log("removinggggg", itemKey);
+     
 
             removeFromCart(itemKey);
             refresh();

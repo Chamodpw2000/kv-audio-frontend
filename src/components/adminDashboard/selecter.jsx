@@ -16,7 +16,7 @@ const Selecter = ({ selections, setSelections }) => {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) {
-                    console.log("No token found");
+
                     return;
                 }
                 
@@ -26,7 +26,7 @@ const Selecter = ({ selections, setSelections }) => {
                     }
                 });
                 
-                console.log("Response:", response.data);
+
                 setProducts(response.data || []);
             } catch (error) {
                 console.error("Error fetching item codes:", error);
@@ -62,7 +62,7 @@ const Selecter = ({ selections, setSelections }) => {
             items: [...prev.items, product]
         }));
 
-        console.log('Selected items:', [...selections.items, product]);
+
     };
 
     return (

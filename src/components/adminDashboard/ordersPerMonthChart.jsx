@@ -41,7 +41,7 @@ const OrdersPerMonthChart = () => {
           Authorization: `Bearer ${token}`
         }
       }).then((res) => {
-        console.log("Data is", res.data);
+
         setOrdersPerMonth(res.data);
         setLoading(false);
       }).catch((err) => {
@@ -49,7 +49,7 @@ const OrdersPerMonthChart = () => {
         setLoading(false);
       });
     } else {
-      console.log("No token found");
+
       setLoading(false);
     }
   },[])
@@ -75,7 +75,7 @@ const OrdersPerMonthChart = () => {
         { month: "July", orders: 0 },
       ];
 
-  console.log("Chart Data:", ordersPerMonthChartData);
+
 
 
  if (loading) {

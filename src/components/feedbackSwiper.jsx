@@ -64,7 +64,7 @@ const FeedbackSlider = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log("Data are", res.data);
+      
         setFeedbacks(res.data);
         setIsLoading(false);
       } catch (err) {

@@ -21,7 +21,7 @@ const Orders = () => {
                     }
                 });
                 setOrders(response.data);
-                console.log(response.data);
+
             } catch (error) {
                 console.error('Error fetching orders:', error);
             } finally {
@@ -43,7 +43,7 @@ const Orders = () => {
                 Authorization: `Bearer ${token}`
             }
         }).then((res) => {
-            console.log(res.data);
+
             setLoading(true);
             setModalOpen(false);
         }).catch((err) => {

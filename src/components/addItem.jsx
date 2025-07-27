@@ -36,7 +36,7 @@ const AddItem = () => {
     try {
       setLoading(true);
       const imageurls = await Promise.all(promises);
-console.log("category", productCategory);
+
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/addProduct`,

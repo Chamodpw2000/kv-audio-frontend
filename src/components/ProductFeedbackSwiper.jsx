@@ -42,7 +42,7 @@ const StarRating = ({ rating, setRating }) => {
 
 const ProductFeedbackSlider = ({feedbacks,itemKey,loadingReviews}) => {
 
-  console.log("key", itemKey);
+
   
 
    

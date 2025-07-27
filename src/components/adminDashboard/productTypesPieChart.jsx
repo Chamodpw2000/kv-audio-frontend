@@ -45,7 +45,7 @@ const ProductTypesPieChart = () => {
           Authorization: `Bearer ${token}`
         }
       }).then((res) => {
-        console.log("Data is", res.data);
+
         setProductTypes(res.data);
         setLoading(false);
       }).catch((err) => {
@@ -53,7 +53,7 @@ const ProductTypesPieChart = () => {
         setLoading(false);
       });
     } else {
-      console.log("No token found");
+
       setLoading(false);
     }
   }, []);
@@ -74,9 +74,7 @@ const ProductTypesPieChart = () => {
   // Filter out items with 0 values for the pie chart
   const filteredChartData = productTypesPieChartData.filter(item => item.items > 0);
   
-  console.log("Product Types Object:", productTypesObject);
-  console.log("Pie Chart Data:", productTypesPieChartData);
-  console.log("Filtered Chart Data:", filteredChartData);
+
 
   if (loading) {
     return (

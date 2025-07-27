@@ -18,7 +18,7 @@ const Items = () => {
     if (state === "loading") {
       axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/getProducts`)
         .then((res) => {
-          console.log(res.data)
+
           setProducts(res.data)
           setFilteredProducts(res.data)
           setState("success")

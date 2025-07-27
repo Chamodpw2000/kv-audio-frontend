@@ -7,13 +7,12 @@ const Footer = () => {
     const handleSubscribe = async (email) => {
 
 
-        console.log("Subscribing with email:", email);
 
 
         try {
 
             const responce = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/newsletter/subscribe`, { email });
-            console.log("Subscription response:", responce);
+   
             if (responce.status === 200) {
                 toast.success("Subscribed successfully!");
             } else{
@@ -21,7 +20,7 @@ const Footer = () => {
             }
             setEmail("");
         } catch (e) {
-            console.log("Error subscribing:", e);
+ 
             toast.error("Failed to subscribe. Please try again later.");
 
         }

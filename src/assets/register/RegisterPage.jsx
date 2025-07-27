@@ -18,14 +18,7 @@ const RegisterPage = () => {
 
     const handleRegister = () => {
         
-        console.log({
-            firstName,
-            lastName,
-            email,
-            password,
-            address,
-            phone
-        });
+       
 
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/register`, 
             {
@@ -42,11 +35,11 @@ const RegisterPage = () => {
                 }
             }
         ).then((res)=>{
-            console.log(res);
+          
             toast.success("Registered Successfully");
             navigate('/login');
         }).catch((err)=>{
-            console.log(err);
+          
             toast.error(err?.response?.data?.error||"An error occured");
         })
     };

@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { MdOutlineDashboard } from 'react-icons/md'
-import { TbBrandBooking } from 'react-icons/tb'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { CgMusicSpeaker } from 'react-icons/cg'
 import { FaBackward, FaRegUser } from 'react-icons/fa'
-import { Route, Routes, Link } from 'react-router-dom'
-import Itemsadmin from './itemsAdmin'
-import AddItem from '../../components/addItem'
-import ItemsPageAdmin from './itemsPage'
-import UpdateItem from '../home/updateItemPage'
-import Users from './users'
-import Bookings from './bookings'
-import Orders from './bookings'
-import axios from 'axios'
-import { IoMdPhotos } from "react-icons/io";
-import ManageGallary from '../../components/manageGallary'
+import { IoMdPhotos } from "react-icons/io"
+import { MdOutlineDashboard } from 'react-icons/md'
+import { TbBrandBooking } from 'react-icons/tb'
+import { VscFeedback } from "react-icons/vsc"
+import { Link, Route, Routes } from 'react-router-dom'
 import AddGallaryItem from '../../components/addGallaryItem'
-import { VscFeedback } from "react-icons/vsc";
-import Feedbacks from './feedbacks'
+import AddItem from '../../components/addItem'
+import ManageGallary from '../../components/manageGallary'
+import UpdateItem from '../home/updateItemPage'
+import Orders from './bookings'
 import Dashboard from './Dashboard'
+import Feedbacks from './feedbacks'
+import ItemsPageAdmin from './itemsPage'
+import Users from './users'
 
 
 const AdminDashboard = () => {
@@ -40,7 +38,7 @@ const AdminDashboard = () => {
         }).then((res) => {
 
 
-            console.log(res.data);
+
 
             const user = res.data;
             if (user.role !== 'admin') {
@@ -60,7 +58,9 @@ const AdminDashboard = () => {
 
             <div className='w-full min-h-screen  flex mt-[70px]'>
 
-                <div className='w-[200px] min-h-full bg-green-200 hidden lg:block'>
+                <div className='w-[200px] min-h-full bg-[#3674b5]/70 hidden lg:block'>
+<div className="fixed">
+
 
                     <Link to="/admin" className="w-full h-[40px] text-[25px] font-bold flex items-center justify-center">
                         <MdOutlineDashboard className="w-[25px] h-[25px]" />
@@ -94,7 +94,7 @@ const AdminDashboard = () => {
                     </Link>
 
 
-
+</div>
 
 
 

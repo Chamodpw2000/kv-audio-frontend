@@ -38,7 +38,7 @@ const ItemsPageAdmin = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res.data);
+
       setitemsLoaded(true);
     } catch (error) {
       console.log("Error deleting item:", error);

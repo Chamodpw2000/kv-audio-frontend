@@ -36,7 +36,6 @@ const Slider = () => {
             .then((res) => {
 
 
-                console.log(res.data)
                 setProducts(res.data)
                 setIsLoading(false);
             })
