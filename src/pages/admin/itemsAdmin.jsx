@@ -11,7 +11,7 @@ const Itemsadmin = () => {
         const fetchItems = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/getProducts`)
-                console.log('Full API Response:', response.data) // Debug log
+
                 setItems(response.data)
             } catch (error) {
                 console.log('Error fetching items:', error)
@@ -23,10 +23,7 @@ const Itemsadmin = () => {
         fetchItems()
     }, [])
 
-    // Debug log to check items state
-    useEffect(() => {
-        console.log('Current items state:', items)
-    }, [items])
+
 
     if (loading) {
         return (
@@ -54,7 +51,7 @@ const Itemsadmin = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {items.map((item) => (
-                        console.log('Item:', item), // Debug log;
+
                         
                         <ItemsCard key={item._id} item={item} />
                     ))}

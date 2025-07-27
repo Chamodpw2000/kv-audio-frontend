@@ -28,12 +28,12 @@ const ManageGallary = () => {
       axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gallery`)
     .then((res)=>{
 
-      console.log(res.data);
+ 
       setItems(res.data);
       setitemsLoaded(true);
       
     }).catch((err)=>{
-      console.log(err);
+ 
       setitemsLoaded(true);
       toast.error("An error occured whule fetching data");
 
@@ -69,7 +69,7 @@ const ManageGallary = () => {
             },
           })
           .then((res) => {
-            console.log(res.data);
+    
             toast.success("Item deleted successfully");
             setitemsLoaded(false);
            setModalOpen(false);
@@ -122,7 +122,7 @@ const ManageGallary = () => {
             },
           })
           .then((res) => {
-            console.log(res.data);
+
             toast.success("Item edited successfully");
            setModalOpen(false);
            setLoadItems(!loadItems);
@@ -146,7 +146,7 @@ const ManageGallary = () => {
   }
   
   const handleView = (image, description, title , id) => {
-    console.log(image, description, title , id);
+
     
     setSelectedImage(image);
     setSelectedDescription(description);

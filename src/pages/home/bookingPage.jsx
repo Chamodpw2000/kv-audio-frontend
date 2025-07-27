@@ -20,7 +20,7 @@ const BookingsPage = () => {
         cart.days = calculateDays();
         
         const token = localStorage.getItem('token');
-        console.log(cart);
+
         
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, cart, {
 
@@ -28,7 +28,7 @@ const BookingsPage = () => {
                 Authorization: `Bearer ${token}`,
             }
         }).then((res)=>{
-            console.log(res.data);
+
             localStorage.removeItem('cart');
             setCart(loadCart());
             toast.success('Booking Placed Successfully');
@@ -44,7 +44,7 @@ const BookingsPage = () => {
 
            cartInfo
         }).then((res)=>{
-            console.log(res.data);
+
             setTotal(res.data.totalCost);
 
         }).catch((err)=>{

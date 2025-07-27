@@ -23,7 +23,7 @@ const UpdateItem = () => {
     if(productImages.length > 0) {
       const promises = [];
       for (let i = 0; i < productImages.length; i++) {
-        console.log(productImages[i]);
+  
         const promise = mediaUpload(productImages[i]);
         promises.push(promise);
       }

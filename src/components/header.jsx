@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { GiHamburgerMenu } from "react-icons/gi";
-import MobileNavPannel from './mobileNavPannel';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaShoppingCart } from 'react-icons/fa';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link, useNavigate } from 'react-router-dom';
+import MobileNavPannel from './mobileNavPannel';
 
 const Header = ({auth, setAuth}) => {
 
@@ -22,8 +22,8 @@ const Header = ({auth, setAuth}) => {
   return (
     <header className='w-full h-[70px]  flex justify-center items-center bg-accent text-white fixed
      top-0 left-0 z-50'>
-      <img src="/logo.png" alt="logo" className="w-[70px] h-[70px] object-cover absolute left-5" onClick={() => navigate('/')} />
-      <div className='w-[800px] flex items-center justify-center gap-x-[4%] lg:gap-x-[8%] xl:gap-x-[12%]  2xl:gap-x-[18%] '>
+      <img src="/logo.png" alt="logo" className="w-[70px] h-[70px] object-cover absolute left-5 cursor-pointer" onClick={() => navigate('/')} />
+      <div className='w-[900px] flex items-center justify-center gap-x-[4%] lg:gap-x-[8%] xl:gap-x-[12%]  2xl:gap-x-[18%] '>
         <Link to="/home/gallery" className='hidden text-[20px] m-1 md:block'>Gallery</Link>
         <Link to="/home/items" className='hidden text-[20px] m-1 md:block'>Items</Link>
         {user?.role=="customer"&&<Link to="/home/mybookings" className='hidden text-[20px] m-1 md:block'>My Bookings</Link>}

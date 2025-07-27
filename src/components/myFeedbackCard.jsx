@@ -25,12 +25,11 @@ const [loading, setLoading] = useState(true);
 
 
 
-        console.log("Data are", res.data);
         setUser(res.data);
         setLoading(false);
       } catch (err) {
 
-        console.log("Error fetching user:", err);
+  
         setLoading(false);
 
       }

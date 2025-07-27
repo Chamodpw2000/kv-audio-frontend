@@ -31,7 +31,7 @@ const ProductOverview = () => {
         try {
             setLoadingReviews(true);
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/${key}`);
-            console.log("Reviews are", res.data);
+
             setFeedbacks(res.data.reviews || []);
             setRating(res.data.rating || 0);
             setLoadingReviews(false);
@@ -148,7 +148,7 @@ const ProductOverview = () => {
                                     className='bg-accent text-white px-4 py-2 rounded-md mt-4'
                                     onClick={() => {
                                         addToCart(product.key, 1);
-                                        console.log(loadCart());
+                        
                                         toast.success("Item added to cart");
                                     }}
                                 >

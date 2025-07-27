@@ -25,7 +25,7 @@ const VerifyEmail = ({ setAuth , auth }) => {
         Authorization: `Bearer ${token}`
       }
     }).then((res) => {
-      console.log(res);
+
       toast.success("Email verified successfully!");
       setAuth(!auth);
       navigate('/');
@@ -44,7 +44,7 @@ const VerifyEmail = ({ setAuth , auth }) => {
         Authorization: `Bearer ${token}`
       }
     }).then((res) => {
-      console.log(res);
+
   
       toast.success("OTP resent successfully!");
     }).catch((e) => {
@@ -62,7 +62,7 @@ const VerifyEmail = ({ setAuth , auth }) => {
         Authorization: `Bearer ${token}`
       }
     }).then((res) => {
-      console.log(res);
+
 
       toast.success("Verification code sent to your email");
     }).catch((e) => {

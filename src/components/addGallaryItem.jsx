@@ -102,7 +102,7 @@ const AddGallaryItem = () => {
 
 
 
-      console.log("url is", imageUrl);
+      
       const token = localStorage.getItem('token');
       if (!token) {
         toast.error('Please login to add items.');
@@ -123,11 +123,11 @@ const AddGallaryItem = () => {
         }
       }
       ).then((res) => {
-        console.log(res.data);
+   
         toast.success("Item added successfully");
       })
         .catch((err) => {
-          console.error(err);
+       
           toast.error('An error occurred while adding the item.');
         })
 

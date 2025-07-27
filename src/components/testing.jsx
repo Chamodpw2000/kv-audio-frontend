@@ -9,9 +9,9 @@ const Testing = () => {
 
 
 function uploadFile(){
-  console.log(file);
+
   mediaUpload(file).then((url)=>{
-    console.log(url);
+
   }).catch((error)=>{console.log(error)})
   
 }

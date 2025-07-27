@@ -23,7 +23,7 @@ const StarRating = ({ rating, setRating , setCurrentFeedback}) => {
           key={star}
           type="button"
           onClick={() => {setRating(star)
-            console.log("Star clicked", star);
+
             setCurrentFeedback((prev) => ({ ...prev, rating: star }));
             
           }}
@@ -63,7 +63,6 @@ const MyFeedbackSlider = () => {
   const deleteFeedback = async (id) => {
        setLoading(true);
 
-    console.log(id);
     
     const token = localStorage.getItem('token');
     if (!token) {
@@ -73,7 +72,7 @@ const MyFeedbackSlider = () => {
 
  
     try {
-      console.log("Deleting feedback with ID:", id);
+
       
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -145,11 +144,11 @@ const MyFeedbackSlider = () => {
       // Upload images if needed:
       if(productImages.length > 0
       ) {
-        console.log("Uploading images", productImages);
+
         
         
       const imageUrls = await Promise.all([...productImages].map((file) => mediaUpload(file)));
-      console.log("Image URLs", imageUrls);
+
       
       currentFeedback.photos = imageUrls;
     }
@@ -159,7 +158,6 @@ const MyFeedbackSlider = () => {
    
       setProductImages([]);
       currentFeedback.isApproves= false;
-      console.log("Current Feedback", currentFeedback);
       await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/update/${currentFeedback._id}`, currentFeedback,{
         headers: { Authorization: `Bearer ${token}` }
       });

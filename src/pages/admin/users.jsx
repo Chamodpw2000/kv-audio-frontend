@@ -16,7 +16,7 @@ const Users = () => {
             }).then((res) => {
                 setUsers(res.data);
                 setLoading(false);
-                console.log(res.data);
+
 
             }).catch((err) => {
                 console.error(err);
@@ -40,7 +40,7 @@ const Users = () => {
                 Authorization: `Bearer ${token}`
             }
         }).then((res) => {
-            console.log(res.data);
+
             setLoading(true);
         }).catch((err) => {
             console.error(err);

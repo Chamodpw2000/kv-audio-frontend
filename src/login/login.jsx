@@ -16,13 +16,13 @@ const LoginPage = ({ auth, setAuth }) => {
 
         {
             onSuccess: (response) => {
-                console.log(response);
+
                 axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/googlelogin`, {
                     accesToken: response.access_token
 
 
                 }).then((responce) => {
-                    console.log(responce);
+
                     toast.success("Login Success")
                     const user = responce.data.user
                     localStorage.setItem("token", responce.data.token)
@@ -51,10 +51,6 @@ const LoginPage = ({ auth, setAuth }) => {
     function login() {
 
 
-        console.log(
-            email,
-            password
-        );
 
         const backendurl = import.meta.env.VITE_BACKEND_URL
 
@@ -64,10 +60,10 @@ const LoginPage = ({ auth, setAuth }) => {
 
         }
         ).then((res) => {
-            console.log(res),
+
             toast.success("Login Success")
             const user = res.data.user
-            console.log("user is",user);
+
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", JSON.stringify(user))
             if (user.emailVerified == false) {
@@ -119,8 +115,6 @@ const LoginPage = ({ auth, setAuth }) => {
                        Register here !</Link>
 
 
-                       user@mail.com - 123456<br/>
-                       admin@mail.com - 123456
 
                 </div>
 

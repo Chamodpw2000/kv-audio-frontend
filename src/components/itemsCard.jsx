@@ -1,9 +1,9 @@
 import React from 'react'
 
 const ItemsCard = ({item}) => {
-console.log("===============inside item Card==========================");
 
-  console.log('Item:', item) // Debug log;
+
+
   
   return (
     <div className="max-w-sm mx-auto transform transition duration-300 hover:scale-105 hover:shadow-xl">

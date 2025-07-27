@@ -1,27 +1,23 @@
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { Button } from "@/components/ui/button"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import {
-
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import Selecter from "./selecter"
-import Calander from "./calander"
-import { useState } from "react"
 import axios from "axios"
+import { useState } from "react"
 import toast from "react-hot-toast"
+import Calander from "./calander"
+import Selecter from "./selecter"
 export const description = "A bar chart"
 
 const chartConfig = {
@@ -46,7 +42,7 @@ const OrdersPerItem = () => {
 
 
   const filterOrders = async (selections) => {
-    console.log(selections);
+
     
     // Validation: Check if items are selected
     if (!selections.items || selections.items.length === 0) {
@@ -65,7 +61,7 @@ const OrdersPerItem = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        console.log("No token found");
+
         return;
       }
 
@@ -79,7 +75,7 @@ const OrdersPerItem = () => {
       );
 
       // Format the response
-      console.log("API Response:", response.data);
+  
       
       if (response.data && response.data.analytics) {
         // Create a map of item -> orders from API response
@@ -94,7 +90,7 @@ const OrdersPerItem = () => {
           orders: apiData.get(selectedItem) || 0
         }));
         
-        console.log("Formatted Data:", formattedData);
+
         setChartData(formattedData);
         
         if (formattedData.length > 0) {
@@ -114,13 +110,13 @@ const OrdersPerItem = () => {
           orders: 0
         }));
         
-        console.log("No analytics data - showing selected items with 0 orders");
+
         setChartData(formattedData);
         toast.info("No orders found for the selected items in the date range");
       }
 
     } catch (error) {
-      console.log("Error fetching orders:", error);
+
       toast.error("Failed to fetch orders. Showing selected items with 0 orders.");
       
       // Show selected items with 0 orders on error
@@ -136,14 +132,14 @@ const OrdersPerItem = () => {
   return (
     <Card className="m-[5%] lg:m-[2.5%]">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Orders Per Items</CardTitle>
+        <CardTitle className="text-center text-2xl mb-[50px]">Orders Per Items</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col xl:flex-row">
 
 
-        <div className="flex  xl:flex-1 item-center flex-col justify-center gap-y-10 lg:flex-row lg:gap-x-10 lg:w-full ">
-          <div className="lg:flex-1 mt-5"><Selecter selections={selections} setSelections={setSelections} /></div>
-          <div className="lg:flex-1"><Calander selections={selections} setSelections={setSelections} />
+        <div className="flex  xl:flex-1  flex-col  gap-y-10 lg:flex-row  lg:w-full bg-red-100c gap-x-[150px]">
+          <div className="lg:flex-1 mt-5 max-w-[200px] "><Selecter selections={selections} setSelections={setSelections} /></div>
+          <div className="lg:flex-1 "><Calander selections={selections} setSelections={setSelections} />
 
           </div>
         </div>
