@@ -115,8 +115,6 @@ const LoginPage = ({ auth, setAuth }) => {
                        Register here !</Link>
 
 
-                       user@mail.com - 123456<br/>
-                       admin@mail.com - 123456
 
                 </div>
 
