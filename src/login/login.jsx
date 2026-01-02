@@ -21,16 +21,13 @@ const LoginPage = ({ auth, setAuth }) => {
                     accesToken: response.access_token
 
 
-                }).then((responce) => {
+                }).then((response) => {
 
                     toast.success("Login Success")
-                    const user = responce.data.user
-                    localStorage.setItem("token", responce.data.token)
+                    const user = response.data.user
+                    localStorage.setItem("token", response.data.token)
                     localStorage.setItem("user", JSON.stringify(user))
-
-
-
-
+                    setAuth(!auth);
 
                     if (user?.role === "admin") {
                         navigate('/admin')
@@ -105,6 +102,13 @@ const LoginPage = ({ auth, setAuth }) => {
 
                 <button className='w-[300px] h-[50px] bg-[#f0ad38] text-white text-xl my-5 rounded-lg hover:bg-[#ffb12bee]' onClick={googleLogin} >Login With Google</button>
 
+                <div className='bottom-4 flex flex-col items-center justify-center gap-2 text-white '>
+
+                 <div> admin@mail.com - 12345</div>  
+                 <div>user@mail.com - 123456</div>
+
+                </div>
+
                 <div className='flex flex-col items-center justify-center'>
 
                     <p className='text-white'>
@@ -112,7 +116,8 @@ const LoginPage = ({ auth, setAuth }) => {
                     </p>
 
                     <Link to="/register" className='hover:text-accent font-bold text-white '>
-                       Register here !</Link>
+                       Register here !
+                    </Link>
 
 
 
