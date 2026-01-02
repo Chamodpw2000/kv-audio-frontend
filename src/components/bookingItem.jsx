@@ -33,7 +33,7 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
         }
 
         else {
-     
+
 
             removeFromCart(itemKey);
             refresh();
@@ -63,32 +63,32 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
 
     if (status === 'loading') {
         return <div className=''>
-            
-            
-        <Skelton  width={600} height={400} className='mb-4' />
-       
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            </div>;
+
+
+            <Skelton width={600} height={400} className='mb-4' />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>;
     }
     if (status === 'error') {
         return <div className='text-red-500'>Error loading item.</div>;
@@ -114,7 +114,11 @@ const BookingItem = ({ itemKey, qty, refresh }) => {
 
                         <div>
                             <FaTrash
-                                className="w-7 h-7 p-1 text-red-800  hover:text-white hover:bg-red-800 rounded-full"
+                                className="w-7 h-7 p-1 text-red-800  hover:text-white hover:bg-red-800 rounded-full cursor-pointer"
+                                onClick={() => {
+                                    removeFromCart(itemKey);
+                                    refresh();
+                                }}
                             />                        </div>
 
                     </div>
