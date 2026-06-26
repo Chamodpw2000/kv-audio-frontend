@@ -29,7 +29,7 @@ const Home = () => {
                 <div className=" bg-black bg-opacity-50 flex items-center justify-center flex-col p-5 rounded-xl">
 
                   <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight   ">
-                    Welcome to KV Audio  edit
+                    Welcome to KV Audio
                   </h1>
                   <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mb-6"></div>
                   <h2 className="text-2xl text-white  mb-6 font-bold">
