@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 
 
 const AddGallaryItem = () => {
-
+//
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
