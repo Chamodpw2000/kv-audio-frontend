@@ -1,4 +1,4 @@
-
+  
 import {
   Card,
   CardContent,
@@ -11,12 +11,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import { ordersPerMonthChartData } from './data'
-import { useEffect } from "react"
 import axios from "axios"
-import React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 
 const chartConfig = {

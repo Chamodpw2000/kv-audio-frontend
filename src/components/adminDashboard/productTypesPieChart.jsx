@@ -1,17 +1,17 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle
+  import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card"
 import {
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Pie, PieChart } from "recharts"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { Pie, PieChart } from "recharts"
 
 
 

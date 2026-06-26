@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import './register.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './register.css';
 
 
 

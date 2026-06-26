@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { removeFromCart, addToCart } from '../utils/Cart.jsx';
+import { useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import Skelton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { addToCart, removeFromCart } from '../utils/Cart.jsx';
 
 const BookingItem = ({ itemKey, qty, refresh }) => {
     const [item, setItem] = useState(null);
