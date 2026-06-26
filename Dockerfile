@@ -1,5 +1,5 @@
 # Stage 1: Build React app
-FROM node:18-alpine AS builder
+FROM node:20-alpine3.21 AS builder
 
 WORKDIR /app
 
@@ -16,12 +16,11 @@ ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 RUN npm run build
 
 # Stage 2: Serve with Nginx as non-root on port 8080
-FROM nginx:alpine
-
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+FROM nginx:1.27-alpine
 
 # Allow non-root user to write nginx temp/cache dirs
-RUN mkdir -p /var/cache/nginx /var/run/nginx \
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup \
+    && mkdir -p /var/cache/nginx /var/run/nginx \
     && chown -R appuser:appgroup /var/cache/nginx /var/run/nginx \
     && chown -R appuser:appgroup /usr/share/nginx/html \
     && touch /var/run/nginx.pid \
