@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import 'swiper/css';
@@ -11,7 +12,7 @@ import mediaUpload from '../utils/mediaUpload';
 import LoadingFeedBackCard from './loadingFeedBackCard';
 import ReviewCard from './reviewCard';
 
-const StarRating = ({ rating, setRating }) => {
+const StarRating = ({ rating , setRating }) => {
   const stars = [1, 2, 3, 4, 5];
 
   return (
@@ -38,6 +39,11 @@ const StarRating = ({ rating, setRating }) => {
       </span>
     </div>
   );
+};
+
+StarRating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  setRating: PropTypes.func.isRequired,
 };
 
 const ProductFeedbackSlider = ({feedbacks,itemKey,loadingReviews}) => {

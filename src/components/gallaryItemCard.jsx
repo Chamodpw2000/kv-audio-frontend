@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const GalleryCard = ({ item }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import mediaUpload from '../utils/mediaUpload';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import mediaUpload from '../utils/mediaUpload';
 
 
 const AddGallaryItem = () => {
-
+//
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
